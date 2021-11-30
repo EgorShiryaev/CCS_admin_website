@@ -1,29 +1,43 @@
+import 'package:admin_website/pages/console_page.dart';
 import 'package:admin_website/pages/sign_in_page.dart';
+import 'package:admin_website/providers/sign_in/sign_in_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminWebsite extends StatefulWidget {
+import 'classes/user.dart';
+
+class AdminWebsite extends StatelessWidget {
   const AdminWebsite({Key? key}) : super(key: key);
 
   @override
-  State<AdminWebsite> createState() => _AdminWebsiteState();
-}
-
-class _AdminWebsiteState extends State<AdminWebsite> {
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Admin website',
-      theme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/SignIn',
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/SignIn':
-            return MaterialPageRoute(builder: (_) => const SignInPage());
-          default:
-            return null;
-        }
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SignInCubit>(create: (context) => SignInCubit()),
+      ],
+      child: MaterialApp(
+        title: 'Admin website',
+        theme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/signIn',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/signIn':
+              return MaterialPageRoute(builder: (_) => const SignInPage());
+            case '/console':
+              // var arguments = settings.arguments as ScreenArguments;
+              return MaterialPageRoute(builder: (_) => ConsolePage());
+            default:
+              return null;
+          }
+        },
+      ),
     );
   }
+}
+
+class ScreenArguments {
+  final User user;
+
+  ScreenArguments({required this.user});
 }
