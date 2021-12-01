@@ -19,41 +19,46 @@ class _SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formGlobalKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: loginController,
-            style: Styles.textFieldStyle,
-            cursorColor: Styles.inputColor,
-            decoration: Styles.loginInputDecoration,
-            validator: (value) => _emptyValidator(value ?? ''),
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: passController,
-            style: Styles.textFieldStyle,
-            obscureText: passwordIsUnvisible,
-            cursorColor: Styles.inputColor,
-            decoration: Styles.createPasswordInputDecoration(
-              unvisibility: passwordIsUnvisible,
-              tapIconFunction: _changePasswordIsUnvisible,
-            ),
-            validator: (value) => _emptyValidator(value ?? ''),
-          ),
-          const SizedBox(height: 10),
-          OutlinedButton(
-            style: Styles.buttonStyle,
-            onPressed: _signIn,
-            child: const SizedBox(
-              width: 300,
-              child: Center(
-                child: Text('Sign in', style: Styles.header2),
+    return Center(
+      child: SizedBox(
+        width: 300,
+        child: Form(
+          key: formGlobalKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: loginController,
+                style: Styles.textFieldStyle,
+                cursorColor: Styles.inputColor,
+                decoration: Styles.loginInputDecoration,
+                validator: (value) => _emptyValidator(value ?? ''),
               ),
-            ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: passController,
+                style: Styles.textFieldStyle,
+                obscureText: passwordIsUnvisible,
+                cursorColor: Styles.inputColor,
+                decoration: Styles.createPasswordInputDecoration(
+                  unvisibility: passwordIsUnvisible,
+                  tapIconFunction: _changePasswordIsUnvisible,
+                ),
+                validator: (value) => _emptyValidator(value ?? ''),
+              ),
+              const SizedBox(height: 10),
+              OutlinedButton(
+                style: Styles.buttonStyle,
+                onPressed: _signIn,
+                child: const SizedBox(
+                  width: 300,
+                  child: Center(
+                    child: Text('Sign in', style: Styles.header2),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -79,7 +84,7 @@ class _SignInFormState extends State<SignInForm> {
 
 class Styles {
   static const inputColor = Colors.grey;
-  static const textFieldStyle = TextStyle(color: inputColor);
+  static const textFieldStyle = TextStyle(color: inputColor); 
   static const header2 = TextStyle(fontSize: 32, color: inputColor);
   static const loginInputDecoration = InputDecoration(
     labelText: 'Login',

@@ -25,8 +25,8 @@ class AdminWebsite extends StatelessWidget {
             case '/signIn':
               return MaterialPageRoute(builder: (_) => const SignInPage());
             case '/console':
-              // var arguments = settings.arguments as ScreenArguments;
-              return MaterialPageRoute(builder: (_) => ConsolePage());
+              Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+              return MaterialPageRoute(builder: (_) => ConsolePage(user: arguments['user']));
             default:
               return null;
           }

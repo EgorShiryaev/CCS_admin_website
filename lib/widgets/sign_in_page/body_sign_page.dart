@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+
+import 'sign_in_form.dart';
+
+class BodySignPage extends StatelessWidget {
+  const BodySignPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Expanded(
+          flex: 2,
+          child: SizedBox(),
+        ),
+        Expanded(
+          flex: 1,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('Welcome to Admin console Cinema Control System', style: LocalStyles.header1),
+              Text('Please enter your login and password', style: LocalStyles.header2),
+            ],
+          ),
+        ),
+        const Expanded(
+          flex: 2,
+          child: SignInForm(),
+        ),
+        const Expanded(
+          flex: 2,
+          child: SizedBox(),
+        ),
+      ],
+    );
+  }
+}
+
+class LocalStyles {
+  static const color = Colors.grey;
+  static const header1 = TextStyle(fontSize: 36, color: color);
+  static const header2 = TextStyle(fontSize: 28, color: color);
+}
