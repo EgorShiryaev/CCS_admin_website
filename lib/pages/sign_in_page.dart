@@ -7,11 +7,19 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController loginController = TextEditingController();
+    final TextEditingController passController = TextEditingController();
     return Scaffold(
       body: Stack(
-        children: const [
-          BodySignPage(),
-          PopupSignPage(),
+        children: [
+          BodySignPage(
+            loginController: loginController,
+            passController: passController,
+          ),
+          PopupSignPage(
+            loginController: loginController,
+            passController: passController,
+          ),
         ],
       ),
     );

@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'sign_in_form.dart';
 
 class BodySignPage extends StatelessWidget {
-  const BodySignPage({Key? key}) : super(key: key);
+  final TextEditingController loginController;
+  final TextEditingController passController;
+  const BodySignPage({
+    Key? key,
+    required this.loginController,
+    required this.passController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,6 @@ class BodySignPage extends StatelessWidget {
           child: SizedBox(),
         ),
         Expanded(
-          flex: 1,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -23,9 +28,12 @@ class BodySignPage extends StatelessWidget {
             ],
           ),
         ),
-        const Expanded(
+        Expanded(
           flex: 2,
-          child: SignInForm(),
+          child: SignInForm(
+            loginController: loginController,
+            passController: passController,
+          ),
         ),
         const Expanded(
           flex: 2,

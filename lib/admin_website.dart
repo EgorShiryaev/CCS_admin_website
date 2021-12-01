@@ -1,4 +1,5 @@
 import 'package:admin_website/pages/console_page.dart';
+import 'package:admin_website/pages/develop_page.dart';
 import 'package:admin_website/pages/sign_in_page.dart';
 import 'package:admin_website/providers/sign_in/sign_in_cubit.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class AdminWebsite extends StatelessWidget {
         title: 'Admin website',
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
-        initialRoute: '/signIn',
+        initialRoute: '/develop',
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/signIn':
@@ -27,6 +28,8 @@ class AdminWebsite extends StatelessWidget {
             case '/console':
               Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute(builder: (_) => ConsolePage(user: arguments['user']));
+            case '/develop':
+              return MaterialPageRoute(builder: (_) => const DevelopPage());
             default:
               return null;
           }

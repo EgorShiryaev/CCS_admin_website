@@ -5,7 +5,13 @@ import '../../providers/sign_in/sign_in_cubit.dart';
 import '../../providers/sign_in/sign_in_state.dart';
 
 class PopupSignPage extends StatelessWidget {
-  const PopupSignPage({Key? key}) : super(key: key);
+  final TextEditingController loginController;
+  final TextEditingController passController;
+  const PopupSignPage({
+    Key? key,
+    required this.loginController,
+    required this.passController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class PopupSignPage extends StatelessWidget {
                       child: Container(
                         height: 200,
                         padding: const EdgeInsets.all(25),
-                        decoration: Styles.messageDecoration,
+                        decoration: LocalStyles.messageDecoration,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -36,25 +42,30 @@ class PopupSignPage extends StatelessWidget {
                                   : state is Loaded
                                       ? 'Вы успешно авторизованы!\nС возвращением, ${state.user.name}!'
                                       : '',
-                              style: Styles.message,
+                              style: LocalStyles.message,
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 10),
                             OutlinedButton(
-                              style: Styles.buttonStyle,
-                              onPressed: state is Loaded
-                                  ? () {
-                                      Navigator.pushNamed(context, '/console', arguments: {'user': state.user});
-                                    }
-                                  : () {
-                                      BlocProvider.of<SignInCubit>(context).resignIn();
-                                    },
+                              style: LocalStyles.buttonStyle,
+                              onPressed: () {
+                                if (state is Loaded) {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/console',
+                                    arguments: {'user': state.user},
+                                  );
+                                }
+                                loginController.clear();
+                                passController.clear();
+                                BlocProvider.of<SignInCubit>(context).resignIn();
+                              },
                               child: SizedBox(
                                 width: 300,
                                 child: Center(
                                   child: Text(
                                     state is Error ? 'Вернуться на страницу авторизации' : 'Перейти в консоль',
-                                    style: Styles.message,
+                                    style: LocalStyles.message,
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -72,7 +83,7 @@ class PopupSignPage extends StatelessWidget {
   }
 }
 
-class Styles {
+class LocalStyles {
   static const color = Colors.grey;
   static const message = TextStyle(fontSize: 20, color: color);
   static final messagePopUpContainerColor = Colors.grey.shade800;

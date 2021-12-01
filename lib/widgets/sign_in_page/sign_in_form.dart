@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key}) : super(key: key);
+  final TextEditingController loginController;
+  final TextEditingController passController;
+  const SignInForm({
+    Key? key,
+    required this.loginController,
+    required this.passController,
+  }) : super(key: key);
 
   @override
   _SignInFormState createState() => _SignInFormState();
 }
 
 class _SignInFormState extends State<SignInForm> {
-  TextEditingController loginController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-
   bool passwordIsUnvisible = true;
   final formGlobalKey = GlobalKey<FormState>();
 
@@ -27,19 +30,19 @@ class _SignInFormState extends State<SignInForm> {
           child: Column(
             children: [
               TextFormField(
-                controller: loginController,
-                style: Styles.textFieldStyle,
-                cursorColor: Styles.inputColor,
-                decoration: Styles.loginInputDecoration,
+                controller: widget.loginController,
+                style: LocalStyles.textFieldStyle,
+                cursorColor: LocalStyles.inputColor,
+                decoration: LocalStyles.loginInputDecoration,
                 validator: (value) => _emptyValidator(value ?? ''),
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: passController,
-                style: Styles.textFieldStyle,
+                controller: widget.passController,
+                style: LocalStyles.textFieldStyle,
                 obscureText: passwordIsUnvisible,
-                cursorColor: Styles.inputColor,
-                decoration: Styles.createPasswordInputDecoration(
+                cursorColor: LocalStyles.inputColor,
+                decoration: LocalStyles.createPasswordInputDecoration(
                   unvisibility: passwordIsUnvisible,
                   tapIconFunction: _changePasswordIsUnvisible,
                 ),
@@ -47,12 +50,12 @@ class _SignInFormState extends State<SignInForm> {
               ),
               const SizedBox(height: 10),
               OutlinedButton(
-                style: Styles.buttonStyle,
+                style: LocalStyles.buttonStyle,
                 onPressed: _signIn,
                 child: const SizedBox(
                   width: 300,
                   child: Center(
-                    child: Text('Sign in', style: Styles.header2),
+                    child: Text('Sign in', style: LocalStyles.header2),
                   ),
                 ),
               ),
@@ -64,10 +67,10 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   _signIn() {
-    log('Login: ${loginController.text}');
-    log('Password: ${passController.text}');
+    log('Login: ${widget.loginController.text}');
+    log('Password: ${widget.passController.text}');
     if (formGlobalKey.currentState!.validate()) {
-      BlocProvider.of<SignInCubit>(context).signIn(loginController.text, passController.text);
+      BlocProvider.of<SignInCubit>(context).signIn(widget.loginController.text, widget.passController.text);
     }
   }
 
@@ -82,9 +85,9 @@ class _SignInFormState extends State<SignInForm> {
   }
 }
 
-class Styles {
+class LocalStyles {
   static const inputColor = Colors.grey;
-  static const textFieldStyle = TextStyle(color: inputColor); 
+  static const textFieldStyle = TextStyle(color: inputColor);
   static const header2 = TextStyle(fontSize: 32, color: inputColor);
   static const loginInputDecoration = InputDecoration(
     labelText: 'Login',
