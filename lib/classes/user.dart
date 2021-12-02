@@ -11,7 +11,7 @@ class User {
     required this.role,
   });
 
-  factory User.fromJson( Map<String, dynamic> json) {
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(
       login: json['login'],
       password: json['password'],
@@ -28,6 +28,9 @@ class User {
       'role': Role.values.indexOf(role),
     };
   }
+
+
+  static List<String> get keyForTable => ['Login', 'Name', 'Role'];
 }
 
 enum Role {

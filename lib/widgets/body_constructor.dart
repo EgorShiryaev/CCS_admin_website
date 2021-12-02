@@ -24,7 +24,31 @@ class BodyConstructor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Expanded(child: SizedBox()),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(flex: 2, child: SizedBox()),
+              const Expanded(flex: 4, child: SizedBox()),
+              Expanded(
+                child: Container(
+                  height: 50,
+                  margin: EdgeInsets.all(20),
+                  child: OutlinedButton(
+                    style: LocalStyles.buttonStyle(true),
+                    onPressed: () => Navigator.pop(context),
+                    child: Center(
+                      child: Text(
+                        'Выйти',
+                        style: LocalStyles.header2(true),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         Expanded(
           flex: 4,
           child: Row(

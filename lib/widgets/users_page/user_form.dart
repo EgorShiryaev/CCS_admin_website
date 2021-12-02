@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:admin_website/classes/user.dart';
 import 'package:flutter/material.dart';
 
@@ -7,19 +5,27 @@ class UserForm extends StatelessWidget {
   final TextEditingController loginController;
   final TextEditingController passController;
   final TextEditingController nameController;
+  final Function loginValidator;
+  final Function passValidator;
+  final Function nameValidator;
   final Role role;
   final Function setRole;
+  final GlobalKey<FormState> formGlobalKey;
+  final bool isSelectedUserIsNotNull;
 
-  UserForm({
+  const UserForm({
     Key? key,
     required this.loginController,
     required this.passController,
     required this.nameController,
+    required this.loginValidator,
+    required this.passValidator,
+    required this.nameValidator,
     required this.role,
     required this.setRole,
+    required this.formGlobalKey,
+    required this.isSelectedUserIsNotNull,
   }) : super(key: key);
-
-  final formGlobalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +38,12 @@ class UserForm extends StatelessWidget {
               width: 300,
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: TextFormField(
+                readOnly: isSelectedUserIsNotNull,
                 controller: loginController,
-                style: LocalStyles.textFieldStyle,
+                style: isSelectedUserIsNotNull ? LocalStyles.activeTextFieldStyle : LocalStyles.inactiveTextFieldStyle,
                 cursorColor: LocalStyles.inputColor,
                 decoration: LocalStyles.buildInputDecoration('Login'),
-                validator: (value) => _emptyValidator(value ?? ''),
+                validator: (value) => loginValidator(value),
               ),
             ),
             Container(
@@ -44,10 +51,10 @@ class UserForm extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: TextFormField(
                 controller: passController,
-                style: LocalStyles.textFieldStyle,
+                style: LocalStyles.inactiveTextFieldStyle,
                 cursorColor: LocalStyles.inputColor,
                 decoration: LocalStyles.buildInputDecoration('Password'),
-                validator: (value) => _emptyValidator(value ?? ''),
+                validator: (value) => passValidator(value),
               ),
             ),
             Container(
@@ -55,13 +62,12 @@ class UserForm extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: TextFormField(
                 controller: nameController,
-                style: LocalStyles.textFieldStyle,
+                style: LocalStyles.inactiveTextFieldStyle,
                 cursorColor: LocalStyles.inputColor,
                 decoration: LocalStyles.buildInputDecoration('Name'),
-                validator: (value) => _emptyValidator(value ?? ''),
+                validator: (value) => nameValidator(value),
               ),
             ),
-            
             SizedBox(
               width: 300,
               child: DropdownButton<Role>(
@@ -92,17 +98,14 @@ class UserForm extends StatelessWidget {
       ),
     );
   }
-
-  _emptyValidator(String value) {
-    return value.isEmpty ? 'Введите данные' : null;
-  }
 }
 
 class LocalStyles {
   static const inputColor = Colors.white;
   static const focusColor = Colors.grey;
   static const headerTextStyle = TextStyle(fontSize: 16, color: inputColor);
-  static const textFieldStyle = TextStyle(color: inputColor);
+  static const inactiveTextFieldStyle = TextStyle(color: inputColor);
+  static const activeTextFieldStyle = TextStyle(color: focusColor);
 
   static buildInputDecoration(String label) {
     return InputDecoration(

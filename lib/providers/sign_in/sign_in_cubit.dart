@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:admin_website/classes/exception.dart';
 import 'package:admin_website/classes/user.dart';
 import 'package:admin_website/providers/sign_in/sign_in_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignInCubit extends Cubit<SignInState> {
@@ -14,22 +17,22 @@ class SignInCubit extends Cubit<SignInState> {
 
   void signIn(String login, String password) async {
     emit(Loading());
-
     try {
-      List<QueryDocumentSnapshot<User>> userDocuments = await usersRef.get().then((value) => value.docs);
-      for (var userDoc in userDocuments) {
-        var user = userDoc.data();
-        if (user.login == login && user.password == password) {
-          emit(Loaded(user: user));
-          return;
-        }
+      User? user = await usersRef.doc(login).get().then((value) => value.data());
+      if (user != null && user.login == login && user.password == _hashingPassword(password)) {
+        emit(Loaded(user: user));
+        return;
       }
       emit(Error(message: ExceptionConvert.toTextError(Exceptions.userNotFound)));
-      return;
     } catch (e) {
       emit(Error(message: e.toString()));
-      return;
     }
+  }
+
+  _hashingPassword(String password) {
+    var bytes = utf8.encode(password);
+    var digest = sha256.convert(bytes);
+    return digest.toString();
   }
 
   void resignIn() {

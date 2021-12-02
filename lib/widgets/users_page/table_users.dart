@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
 import '../../classes/user.dart';
 
 class TableUsers extends StatelessWidget {
   final List<User> users;
   final Function setSelectedUser;
-  User? selectUser;
+  final User? selectUser;
 
-  TableUsers({
+  const TableUsers({
     Key? key,
     required this.users,
     required this.setSelectedUser,
@@ -22,10 +20,7 @@ class TableUsers extends StatelessWidget {
       child: SingleChildScrollView(
         child: DataTable(
           border: LocalStyles.tableBorder,
-          columns: users.first.toJson().keys.map((String header) {
-            String title = header.characters.first.toUpperCase() + header.substring(1);
-            return DataColumn(label: Text(title));
-          }).toList(),
+          columns: User.keyForTable.map((String header) => DataColumn(label: Text(header))).toList(),
           rows: getRows(users),
         ),
       ),
@@ -35,7 +30,7 @@ class TableUsers extends StatelessWidget {
   getRows(List<User> users) {
     return users
         .map((e) => DataRow(
-              selected: selectUser != null ? e.toJson().toString() == selectUser?.toJson().toString() : false,
+              selected: selectUser != null ? e.login == selectUser?.login : false,
               onSelectChanged: (value) {
                 if (value != null && value) {
                   setSelectedUser(e);
@@ -49,10 +44,11 @@ class TableUsers extends StatelessWidget {
   }
 
   getDataCell(User user) {
+    final keys = User.keyForTable.map((e) => e.toLowerCase());
     final json = user.toJson();
-    return json.keys.map((title) {
+    return keys.map((key) {
       return DataCell(
-        Text(title == 'role' ? user.role.name : json[title].toString()),
+        Text(key == 'role' ? user.role.name : json[key].toString()),
       );
     }).toList();
   }

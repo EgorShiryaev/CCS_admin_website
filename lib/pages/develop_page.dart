@@ -1,8 +1,5 @@
-import 'package:admin_website/classes/user.dart';
-import 'package:admin_website/widgets/console_page/body_console_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../providers/users/users_cubit.dart';
 import '../providers/users/users_state.dart';
 import '../widgets/state_builder.dart';

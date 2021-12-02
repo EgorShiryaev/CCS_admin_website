@@ -55,9 +55,9 @@ class PopupSignPage extends StatelessWidget {
                                     '/console',
                                     arguments: {'user': state.user},
                                   );
+                                  loginController.clear();
+                                  passController.clear();
                                 }
-                                loginController.clear();
-                                passController.clear();
                                 BlocProvider.of<SignInCubit>(context).resignIn();
                               },
                               child: SizedBox(
@@ -84,7 +84,7 @@ class PopupSignPage extends StatelessWidget {
 }
 
 class LocalStyles {
-  static const color = Colors.grey;
+  static const color = Colors.white;
   static const message = TextStyle(fontSize: 20, color: color);
   static final messagePopUpContainerColor = Colors.grey.shade800;
   static const errorColor = Colors.red;

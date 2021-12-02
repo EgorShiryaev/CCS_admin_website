@@ -14,20 +14,22 @@ class BodyUsersPage extends StatefulWidget {
     required this.users,
   }) : super(key: key);
 
-  final TextEditingController loginController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
+  final loginController = TextEditingController();
+  final passController = TextEditingController();
+  final nameController = TextEditingController();
+
+  final globalKey = GlobalKey<FormState>();
 
   @override
   State<BodyUsersPage> createState() => _BodyUsersPageState();
 }
 
 class _BodyUsersPageState extends State<BodyUsersPage> {
-  User? selectUser = null;
+  User? selectUser;
   setSelectedUser(User? e) {
     setState(() => selectUser = e);
     widget.loginController.text = selectUser != null ? selectUser!.login : '';
-    widget.passController.text = selectUser != null ? selectUser!.password : '';
+    widget.passController.text = '';
     widget.nameController.text = selectUser != null ? selectUser!.name : '';
     selectRole = selectUser != null ? selectUser!.role : Role.admin;
   }
@@ -43,6 +45,11 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
       nameController: widget.nameController,
       role: selectRole,
       setRole: setSelectRol,
+      loginValidator: loginValidator,
+      passValidator: passwordValidator,
+      nameValidator: emptyValidator,
+      formGlobalKey: widget.globalKey,
+      isSelectedUserIsNotNull: selectUser != null,
     );
     Widget table = TableUsers(
       users: widget.users,
@@ -52,32 +59,64 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
     return BodyConstructor(
       form: form,
       table: table,
-      add: _addUser,
+      add: _createUser,
       update: _updateUser,
-      delete: _deleteUser, isSelect: selectUser != null,
+      delete: _deleteUser,
+      isSelect: selectUser != null,
     );
   }
 
-  _addUser() {
-    User user = User(
-      login: widget.loginController.text,
-      password: widget.passController.text,
-      name: widget.nameController.text,
-      role: selectRole,
-    );
-    BlocProvider.of<UsersCubit>(context).create(user);
-    setState(() => selectUser = null);
+  loginValidator(String value) {
+    for (var user in widget.users) {
+      if (user.login == value) {
+        return 'Этот логин занят';
+      }
+    }
+    return emptyValidator(value);
+  }
+
+  passwordValidator(String value) {
+    if (selectUser == null || value.isNotEmpty) {
+      if (value.length < 8) {
+        return 'Пароль должен быть 8 или больше символов';
+      }
+      if (value.length > 30) {
+        return 'Пароль должен быть 30 или меньше символов';
+      }
+      return null;
+    }
+  }
+
+  emptyValidator(String value) {
+    return value.isEmpty ? 'Введите данные' : null;
+  }
+
+  _createUser() {
+    if (widget.globalKey.currentState!.validate()) {
+      User user = User(
+        login: widget.loginController.text,
+        password: widget.passController.text,
+        name: widget.nameController.text,
+        role: selectRole,
+      );
+      BlocProvider.of<UsersCubit>(context).create(user);
+      setState(() => selectUser = null);
+    }
   }
 
   _updateUser() {
-    User user = User(
-      login: widget.loginController.text,
-      password: widget.passController.text,
-      name: widget.nameController.text,
-      role: selectRole,
-    );
-    BlocProvider.of<UsersCubit>(context).update(selectUser!.login, user);
-    setState(() => selectUser = null);
+    if (passwordValidator(widget.passController.text) == null) {
+      User user = User(
+        login: widget.loginController.text,
+        password: widget.passController.text.isEmpty ? selectUser!.password : widget.passController.text,
+        name: widget.nameController.text,
+        role: selectRole,
+      );
+      BlocProvider.of<UsersCubit>(context).update(user, widget.passController.text.isEmpty);
+      setState(() => selectUser = null);
+    } else {
+      widget.globalKey.currentState!.validate();
+    }
   }
 
   _deleteUser() {

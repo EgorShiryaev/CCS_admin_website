@@ -7,7 +7,7 @@ class BodyConsolePage extends StatelessWidget {
   BodyConsolePage({Key? key, required this.user}) : super(key: key);
 
   final buttons = [
-    Button(title: 'Пользователи', url: '/'),
+    Button(title: 'Пользователи', url: '/users'),
     Button(title: 'Кино', url: '/'),
     Button(title: 'Сеансы', url: '/'),
     Button(title: 'Создать отчёт', url: '/'),

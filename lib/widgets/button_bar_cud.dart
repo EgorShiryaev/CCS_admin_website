@@ -23,10 +23,10 @@ class ButtonBarCUD extends StatelessWidget {
         functions.length,
         (index) => Expanded(
           child: OutlinedButton(
-            style: LocalStyles.buttonStyle(index == 0 || isSelect),
-            onPressed: index == 0 || isSelect ? () => functions[index]() : null,
+            style: LocalStyles.buttonStyle(index == 0 ? !isSelect : isSelect),
+            onPressed: (index == 0 ? !isSelect : isSelect) ? () => functions[index]() : null,
             child: Center(
-              child: Text(header[index], style: LocalStyles.header2(index == 0 || isSelect)),
+              child: Text(header[index], style: LocalStyles.header2((index == 0 ? !isSelect : isSelect))),
             ),
           ),
         ),
