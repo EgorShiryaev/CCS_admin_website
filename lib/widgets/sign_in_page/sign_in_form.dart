@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:admin_website/providers/sign_in/sign_in_cubit.dart';
+import 'package:admin_website/providers/users/users_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,6 +72,7 @@ class _SignInFormState extends State<SignInForm> {
     log('Password: ${widget.passController.text}');
     if (formGlobalKey.currentState!.validate()) {
       BlocProvider.of<SignInCubit>(context).signIn(widget.loginController.text, widget.passController.text);
+      BlocProvider.of<UsersCubit>(context).read();
     }
   }
 

@@ -12,10 +12,6 @@ class SignInCubit extends Cubit<SignInState> {
         toFirestore: (user, _) => user.toJson(),
       );
 
-  void resignIn() {
-    emit(Empty());
-  }
-
   void signIn(String login, String password) async {
     emit(Loading());
 
@@ -34,5 +30,9 @@ class SignInCubit extends Cubit<SignInState> {
       emit(Error(message: e.toString()));
       return;
     }
+  }
+
+  void resignIn() {
+    emit(Empty());
   }
 }

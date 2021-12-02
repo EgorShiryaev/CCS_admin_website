@@ -2,6 +2,7 @@ import 'package:admin_website/pages/console_page.dart';
 import 'package:admin_website/pages/develop_page.dart';
 import 'package:admin_website/pages/sign_in_page.dart';
 import 'package:admin_website/providers/sign_in/sign_in_cubit.dart';
+import 'package:admin_website/providers/users/users_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +16,7 @@ class AdminWebsite extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SignInCubit>(create: (context) => SignInCubit()),
+        BlocProvider<UsersCubit>(create: (context) => UsersCubit()),
       ],
       child: MaterialApp(
         title: 'Admin website',
