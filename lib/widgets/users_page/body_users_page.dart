@@ -1,6 +1,6 @@
 import 'package:admin_website/classes/user.dart';
-import 'package:admin_website/widgets/body_constructor.dart';
-import 'package:admin_website/widgets/users_page/table_users.dart';
+import 'package:admin_website/widgets/constructors/body_constructor.dart';
+import 'package:admin_website/widgets/constructors/table_constructor.dart';
 import 'package:admin_website/widgets/users_page/user_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,10 +51,10 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
       formGlobalKey: widget.globalKey,
       isSelectedUserIsNotNull: selectUser != null,
     );
-    Widget table = TableUsers(
-      users: widget.users,
-      setSelectedUser: setSelectedUser,
-      selectUser: selectUser,
+    Widget table = TableConstructor(
+      datas: widget.users,
+      setSelectedData: setSelectedUser,
+      selectData: selectUser,
     );
     return BodyConstructor(
       form: form,

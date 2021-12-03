@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ButtonBarCUD extends StatelessWidget {
+class ButtonBarCUDConstuctor extends StatelessWidget {
   final Function add;
   final Function update;
   final Function delete;
   final bool isSelect;
-  const ButtonBarCUD({
+  const ButtonBarCUDConstuctor({
     Key? key,
     required this.add,
     required this.update,

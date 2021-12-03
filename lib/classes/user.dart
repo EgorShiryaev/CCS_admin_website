@@ -1,4 +1,6 @@
-class User {
+import 'data_type.dart';
+
+class User extends DataType {
   final String login;
   final String password;
   final String name;
@@ -20,6 +22,7 @@ class User {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'login': login,
@@ -29,8 +32,15 @@ class User {
     };
   }
 
+  @override
+  List<String> get keysForTable => ['Login', 'Name', 'Role'];
 
-  static List<String> get keyForTable => ['Login', 'Name', 'Role'];
+  @override
+  String get id => login;
+
+  @override
+
+  List get valuesForTable => [login, name, role];
 }
 
 enum Role {

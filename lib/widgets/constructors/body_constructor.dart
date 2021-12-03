@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'button_bar_cud.dart';
+import 'button_bar_cud_constructor.dart';
 
 class BodyConstructor extends StatelessWidget {
   final Widget form;
@@ -33,7 +33,7 @@ class BodyConstructor extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: 50,
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: OutlinedButton(
                     style: LocalStyles.buttonStyle(true),
                     onPressed: () => Navigator.pop(context),
@@ -73,7 +73,7 @@ class BodyConstructor extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: ButtonBarCUD(
+                      child: ButtonBarCUDConstuctor(
                         add: add,
                         delete: delete,
                         update: update,

@@ -8,7 +8,7 @@ class BodyConsolePage extends StatelessWidget {
 
   final buttons = [
     Button(title: 'Пользователи', url: '/users'),
-    Button(title: 'Кино', url: '/'),
+    Button(title: 'Фильмы', url: '/'),
     Button(title: 'Сеансы', url: '/'),
     Button(title: 'Создать отчёт', url: '/'),
     Button(title: 'Выйти', url: 'back'),
