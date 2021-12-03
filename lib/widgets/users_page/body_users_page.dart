@@ -1,6 +1,6 @@
 import 'package:admin_website/classes/user.dart';
-import 'package:admin_website/widgets/constructors/body_constructor.dart';
-import 'package:admin_website/widgets/constructors/table_constructor.dart';
+import 'package:admin_website/widgets/_constructors/body_constructor.dart';
+import 'package:admin_website/widgets/_constructors/table_constructor.dart';
 import 'package:admin_website/widgets/users_page/user_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

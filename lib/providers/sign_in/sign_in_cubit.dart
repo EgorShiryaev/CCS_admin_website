@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:admin_website/.config/firebase_config.dart';
 import 'package:admin_website/classes/exception.dart';
 import 'package:admin_website/classes/user.dart';
 import 'package:admin_website/providers/sign_in/sign_in_state.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignInCubit extends Cubit<SignInState> {
   SignInCubit() : super(Empty());
 
-  final usersRef = FirebaseFirestore.instance.collection('users').withConverter<User>(
+  final usersRef = FirebaseFirestore.instance.collection(DefaultFirebaseConfig.users).withConverter<User>(
         fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
         toFirestore: (user, _) => user.toJson(),
       );

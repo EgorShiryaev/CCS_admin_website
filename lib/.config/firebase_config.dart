@@ -33,4 +33,8 @@ class DefaultFirebaseConfig {
     //   );
     // }
   }
+
+  static get users => 'users';
+  static get genres => 'genres';
+  static get films => 'films';
 }

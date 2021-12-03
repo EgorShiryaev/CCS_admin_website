@@ -62,6 +62,7 @@ class PopupSignPage extends StatelessWidget {
                               },
                               child: SizedBox(
                                 width: 300,
+                                height: 50,
                                 child: Center(
                                   child: Text(
                                     state is Error ? 'Вернуться на страницу авторизации' : 'Перейти в консоль',

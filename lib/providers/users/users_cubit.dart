@@ -5,11 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:crypto/crypto.dart';
 import '../../classes/user.dart';
+import 'package:admin_website/.config/firebase_config.dart';
 
 class UsersCubit extends Cubit<UsersState> {
   UsersCubit() : super(Empty());
 
-  final usersRef = FirebaseFirestore.instance.collection('users').withConverter<User>(
+  final usersRef = FirebaseFirestore.instance.collection(DefaultFirebaseConfig.users).withConverter<User>(
         fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
         toFirestore: (user, _) => user.toJson(),
       );
