@@ -7,7 +7,7 @@ class Film extends DataType {
   final int genre;
   final String posterUrl;
   final String company;
-  final String contry;
+  final String country;
   final int year;
 
   Film({
@@ -17,7 +17,7 @@ class Film extends DataType {
     required this.genre,
     required this.posterUrl,
     required this.company,
-    required this.contry,
+    required this.country,
     required this.year,
   });
 
@@ -29,7 +29,7 @@ class Film extends DataType {
       genre: json['about']['genre'],
       posterUrl: json['poster_url'],
       company: json['production']['company'],
-      contry: json['production']['contry'],
+      country: json['production']['country'],
       year: json['production']['year'],
     );
   }
@@ -46,7 +46,7 @@ class Film extends DataType {
       'poster_url': posterUrl,
       'production': {
         'company': company,
-        'contry': contry,
+        'country': country,
         'year': year,
       },
     };
@@ -56,10 +56,8 @@ class Film extends DataType {
   String get id => title;
 
   @override
-  // TODO: implement keysForTable
-  List<String> get keysForTable => throw UnimplementedError();
+  List<String> get keysForTable => ['Title', 'Description', 'Duration', 'Genre', 'Company', 'Country', 'Year'];
 
   @override
-  // TODO: implement valuesForTable
-  List get valuesForTable => throw UnimplementedError();
+  List get valuesForTable => [title, description, duration, genre, company, country, year];
 }

@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:admin_website/classes/user.dart';
+import 'package:admin_website/providers/cubit_constructor.dart';
 import 'package:admin_website/widgets/_constructors/body_constructor.dart';
 import 'package:admin_website/widgets/_constructors/table_constructor.dart';
 import 'package:admin_website/widgets/users_page/user_form.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../providers/users/users_cubit.dart';
+import '../../providers/users_cubit.dart';
 
 class BodyUsersPage extends StatefulWidget {
   final List<User> users;
@@ -99,7 +103,7 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
         name: widget.nameController.text,
         role: selectRole,
       );
-      BlocProvider.of<UsersCubit>(context).create(user);
+      BlocProvider.of<CubitConstructor>(context).create(user);
       setState(() => selectUser = null);
     }
   }
@@ -108,11 +112,12 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
     if (passwordValidator(widget.passController.text) == null) {
       User user = User(
         login: widget.loginController.text,
-        password: widget.passController.text.isEmpty ? selectUser!.password : widget.passController.text,
+        password:
+            widget.passController.text.isEmpty ? selectUser!.password : hashingPassword(widget.passController.text),
         name: widget.nameController.text,
         role: selectRole,
       );
-      BlocProvider.of<UsersCubit>(context).update(user, widget.passController.text.isEmpty);
+      BlocProvider.of<UsersCubit>(context).update(user);
       setState(() => selectUser = null);
     } else {
       widget.globalKey.currentState!.validate();
@@ -120,9 +125,11 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
   }
 
   _deleteUser() {
-    BlocProvider.of<UsersCubit>(context).delete(selectUser!.login);
+    BlocProvider.of<UsersCubit>(context).delete(selectUser!.id);
     setState(() => selectUser = null);
   }
+
+  String hashingPassword(String password) => sha256.convert(utf8.encode(password)).toString();
 }
 
 class LocalStyles {

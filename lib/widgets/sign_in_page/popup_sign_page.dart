@@ -17,7 +17,7 @@ class PopupSignPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {
-        if (state is Empty) {
+        if (state is SignOut) {
           return const SizedBox();
         }
         return Center(
@@ -39,7 +39,7 @@ class PopupSignPage extends StatelessWidget {
                             Text(
                               state is Error
                                   ? state.message
-                                  : state is Loaded
+                                  : state is SignIn
                                       ? 'Вы успешно авторизованы!\nС возвращением, ${state.user.name}!'
                                       : '',
                               style: LocalStyles.message,
@@ -49,15 +49,15 @@ class PopupSignPage extends StatelessWidget {
                             OutlinedButton(
                               style: LocalStyles.buttonStyle,
                               onPressed: () {
-                                if (state is Loaded) {
+                                if (state is SignIn) {
                                   Navigator.pushNamed(
                                     context,
                                     '/console',
                                     arguments: {'user': state.user},
                                   );
                                   loginController.clear();
-                                  passController.clear();
                                 }
+                                passController.clear();
                                 BlocProvider.of<SignInCubit>(context).resignIn();
                               },
                               child: SizedBox(

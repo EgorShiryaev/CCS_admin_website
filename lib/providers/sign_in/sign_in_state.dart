@@ -2,14 +2,14 @@ import 'package:admin_website/classes/user.dart';
 
 class SignInState {}
 
-class Empty extends SignInState{}
+class SignOut extends SignInState{}
 
 class Loading extends SignInState {}
 
-class Loaded extends SignInState {
+class SignIn extends SignInState {
   final User user;
 
-  Loaded({required this.user});
+  SignIn({required this.user});
 }
 
 class Error extends SignInState {
