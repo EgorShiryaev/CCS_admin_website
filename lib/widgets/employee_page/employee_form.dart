@@ -1,19 +1,19 @@
-import 'package:admin_website/classes/user.dart';
+import 'package:admin_website/classes/app_state.dart';
 import 'package:flutter/material.dart';
 
-class UserForm extends StatelessWidget {
+class EmployeeForm extends StatelessWidget {
   final TextEditingController loginController;
   final TextEditingController passController;
   final TextEditingController nameController;
   final Function loginValidator;
   final Function passValidator;
   final Function nameValidator;
-  final Role role;
+  final String role;
   final Function setRole;
   final GlobalKey<FormState> formGlobalKey;
   final bool isSelectedUserIsNotNull;
 
-  const UserForm({
+  const EmployeeForm({
     Key? key,
     required this.loginController,
     required this.passController,
@@ -70,7 +70,7 @@ class UserForm extends StatelessWidget {
             ),
             SizedBox(
               width: 300,
-              child: DropdownButton<Role>(
+              child: DropdownButton<String>(
                 value: role,
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
                 alignment: AlignmentDirectional.center,
@@ -80,13 +80,13 @@ class UserForm extends StatelessWidget {
                   color: LocalStyles.focusColor,
                 ),
                 onChanged: (value) => setRole(value),
-                items: Role.values.map<DropdownMenuItem<Role>>((Role role) {
-                  return DropdownMenuItem<Role>(
+                items: appState.employeeRoles.map<DropdownMenuItem<String>>((String role) {
+                  return DropdownMenuItem<String>(
                     value: role,
                     child: SizedBox(
                       width: 276,
                       child: Center(
-                        child: Text(role.name),
+                        child: Text(role),
                       ),
                     ),
                   );

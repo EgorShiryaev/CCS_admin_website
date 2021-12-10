@@ -1,11 +1,11 @@
-import 'package:admin_website/pages/console_page.dart';
+import 'package:admin_website/pages/main_menu_page.dart';
 import 'package:admin_website/pages/sign_in_page.dart';
-import 'package:admin_website/pages/users_page.dart';
+import 'package:admin_website/pages/employee_page.dart';
 import 'package:admin_website/providers/sign_in/sign_in_cubit.dart';
-import 'package:admin_website/providers/users_cubit.dart';
+import 'package:admin_website/providers/employee_crud_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'classes/user.dart';
+import 'classes/employee.dart';
 
 class AdminWebsite extends StatelessWidget {
   const AdminWebsite({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class AdminWebsite extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SignInCubit>(create: (context) => SignInCubit()),
-        BlocProvider<UsersCubit>(create: (context) => UsersCubit()),
+        BlocProvider<EmployeesCRUDCubit>(create: (context) => EmployeesCRUDCubit()),
       ],
       child: MaterialApp(
         title: 'Admin website',
@@ -30,7 +30,7 @@ class AdminWebsite extends StatelessWidget {
               Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute(builder: (_) => ConsolePage(user: arguments['user']));
             case '/users':
-              return MaterialPageRoute(builder: (_) => const UsersPage());
+              return MaterialPageRoute(builder: (_) => const EmployeePage());
             default:
               return null;
           }
@@ -41,7 +41,7 @@ class AdminWebsite extends StatelessWidget {
 }
 
 class ScreenArguments {
-  final User user;
+  final Employee user;
 
   ScreenArguments({required this.user});
 }

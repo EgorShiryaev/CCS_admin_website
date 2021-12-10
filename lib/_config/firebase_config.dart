@@ -1,4 +1,4 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
@@ -13,9 +13,9 @@ class DefaultFirebaseConfig {
         storageBucket: "cinema-control-system.appspot.com",
         messagingSenderId: "764973555459",
         appId: "1:764973555459:web:3af96231e3ff5a57d39336",
-        // measurementId: 
+        // measurementId:
       );
-    } 
+    }
     // else if (Platform.isIOS || Platform.isMacOS) {
     //   return const FirebaseOptions(
     //     apiKey: apiKey,
@@ -33,7 +33,9 @@ class DefaultFirebaseConfig {
     // }
   }
 
-  static get users => 'users';
-  static get genres => 'genres';
+  static get employeesRoles => 'roles';
+  static get filmGenres => 'genres';
+  static get cinemaHalls => 'cinemaHalls';
+  static get employees => 'employees';
   static get films => 'films';
 }

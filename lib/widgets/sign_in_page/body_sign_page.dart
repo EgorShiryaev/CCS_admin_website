@@ -23,7 +23,8 @@ class BodySignPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Text('Welcome to Admin console Cinema Control System', style: LocalStyles.header1),
+              Text('Welcome to Cinema Control System', style: LocalStyles.header1),
+              SizedBox(height: 5),
               Text('Please enter your login and password', style: LocalStyles.header2),
             ],
           ),

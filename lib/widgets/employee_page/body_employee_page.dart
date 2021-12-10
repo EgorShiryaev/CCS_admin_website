@@ -1,21 +1,20 @@
 import 'dart:convert';
-
-import 'package:admin_website/classes/user.dart';
-import 'package:admin_website/providers/cubit_constructor.dart';
+import 'package:admin_website/classes/app_state.dart';
+import 'package:admin_website/classes/employee.dart';
+import 'package:admin_website/providers/crud_cubit_constructor.dart';
 import 'package:admin_website/widgets/_constructors/body_constructor.dart';
 import 'package:admin_website/widgets/_constructors/table_constructor.dart';
-import 'package:admin_website/widgets/users_page/user_form.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../providers/employee_crud_cubit.dart';
+import 'employee_form.dart';
 
-import '../../providers/users_cubit.dart';
-
-class BodyUsersPage extends StatefulWidget {
-  final List<User> users;
-  BodyUsersPage({
+class BodyEmployeePage extends StatefulWidget {
+  final List<Employee> employees;
+  BodyEmployeePage({
     Key? key,
-    required this.users,
+    required this.employees,
   }) : super(key: key);
 
   final loginController = TextEditingController();
@@ -25,25 +24,25 @@ class BodyUsersPage extends StatefulWidget {
   final globalKey = GlobalKey<FormState>();
 
   @override
-  State<BodyUsersPage> createState() => _BodyUsersPageState();
+  State<BodyEmployeePage> createState() => _BodyEmployeePageState();
 }
 
-class _BodyUsersPageState extends State<BodyUsersPage> {
-  User? selectUser;
-  setSelectedUser(User? e) {
+class _BodyEmployeePageState extends State<BodyEmployeePage> {
+  Employee? selectUser;
+  setSelectedUser(Employee? e) {
     setState(() => selectUser = e);
     widget.loginController.text = selectUser != null ? selectUser!.login : '';
     widget.passController.text = '';
     widget.nameController.text = selectUser != null ? selectUser!.name : '';
-    selectRole = selectUser != null ? selectUser!.role : Role.admin;
+    selectRole = selectUser != null ? selectUser!.role : appState.employeeRoles.last;
   }
 
-  Role selectRole = Role.admin;
-  setSelectRol(Role role) => setState(() => selectRole = role);
+  String selectRole = appState.employeeRoles.last;
+  setSelectRol(String role) => setState(() => selectRole = role);
 
   @override
   Widget build(BuildContext context) {
-    Widget form = UserForm(
+    Widget form = EmployeeForm(
       loginController: widget.loginController,
       passController: widget.passController,
       nameController: widget.nameController,
@@ -56,7 +55,7 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
       isSelectedUserIsNotNull: selectUser != null,
     );
     Widget table = TableConstructor(
-      datas: widget.users,
+      datas: widget.employees,
       setSelectedData: setSelectedUser,
       selectData: selectUser,
     );
@@ -71,7 +70,7 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
   }
 
   loginValidator(String value) {
-    for (var user in widget.users) {
+    for (var user in widget.employees) {
       if (user.login == value) {
         return 'Этот логин занят';
       }
@@ -97,27 +96,27 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
 
   _createUser() {
     if (widget.globalKey.currentState!.validate()) {
-      User user = User(
+      Employee user = Employee(
         login: widget.loginController.text,
         password: widget.passController.text,
         name: widget.nameController.text,
         role: selectRole,
       );
-      BlocProvider.of<CubitConstructor>(context).create(user);
+      BlocProvider.of<EmployeesCRUDCubit>(context).create(user);
       setState(() => selectUser = null);
     }
   }
 
   _updateUser() {
     if (passwordValidator(widget.passController.text) == null) {
-      User user = User(
+      Employee user = Employee(
         login: widget.loginController.text,
         password:
             widget.passController.text.isEmpty ? selectUser!.password : hashingPassword(widget.passController.text),
         name: widget.nameController.text,
         role: selectRole,
       );
-      BlocProvider.of<UsersCubit>(context).update(user);
+      BlocProvider.of<EmployeesCRUDCubit>(context).update(user);
       setState(() => selectUser = null);
     } else {
       widget.globalKey.currentState!.validate();
@@ -125,7 +124,7 @@ class _BodyUsersPageState extends State<BodyUsersPage> {
   }
 
   _deleteUser() {
-    BlocProvider.of<UsersCubit>(context).delete(selectUser!.id);
+    BlocProvider.of<EmployeesCRUDCubit>(context).delete(selectUser!.id);
     setState(() => selectUser = null);
   }
 

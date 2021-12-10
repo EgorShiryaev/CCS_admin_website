@@ -3,7 +3,7 @@ import 'package:admin_website/providers/sign_in/sign_in_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../providers/users_cubit.dart';
+import '../../providers/employee_crud_cubit.dart';
 
 class SignInForm extends StatefulWidget {
   final TextEditingController loginController;
@@ -73,7 +73,7 @@ class _SignInFormState extends State<SignInForm> {
     log('Password: ${widget.passController.text}');
     if (formGlobalKey.currentState!.validate()) {
       BlocProvider.of<SignInCubit>(context).signIn(widget.loginController.text, widget.passController.text);
-      BlocProvider.of<UsersCubit>(context).read();
+      BlocProvider.of<EmployeesCRUDCubit>(context).read();
     }
   }
 

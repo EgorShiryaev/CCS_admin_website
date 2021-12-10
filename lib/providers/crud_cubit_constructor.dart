@@ -1,12 +1,11 @@
-import 'package:admin_website/classes/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../classes/data_type.dart';
 
-class CubitConstructor extends Cubit<StateCubit> {
+class CRUD_CubitConstructor<Type> extends Cubit<StateCubit> {
   final CollectionReference collectionRef;
 
-  CubitConstructor({
+  CRUD_CubitConstructor({
     required this.collectionRef,
   }) : super(Empty());
 
@@ -23,9 +22,8 @@ class CubitConstructor extends Cubit<StateCubit> {
   read() async {
     emit(Loading());
     try {
-      List<QueryDocumentSnapshot<User>> docs =
-          await collectionRef.get().then((value) => value.docs as List<QueryDocumentSnapshot<User>>);
-      emit(Loaded(data: docs.map((e) => e.data()).toList()));
+      List<QueryDocumentSnapshot<Object?>> docs = await collectionRef.get().then((value) => value.docs);
+      emit(Loaded<Type>(data: docs.map((e) => e.data() as Type).toList()));
     } catch (e) {
       emit(Error(message: e.toString()));
     }
@@ -58,8 +56,8 @@ class Empty extends StateCubit {}
 
 class Loading extends StateCubit {}
 
-class Loaded extends StateCubit {
-  final List data;
+class Loaded<Type> extends StateCubit {
+  final List<Type> data;
 
   Loaded({required this.data});
 }

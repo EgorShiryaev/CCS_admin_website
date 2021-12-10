@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:admin_website/_config/firebase_config.dart';
 import 'package:admin_website/classes/exception.dart';
-import 'package:admin_website/classes/user.dart';
+import 'package:admin_website/classes/employee.dart';
 import 'package:admin_website/providers/sign_in/sign_in_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
@@ -10,15 +10,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignInCubit extends Cubit<SignInState> {
   SignInCubit() : super(SignOut());
 
-  final usersRef = FirebaseFirestore.instance.collection(DefaultFirebaseConfig.users).withConverter<User>(
-        fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
+  final usersRef = FirebaseFirestore.instance.collection(DefaultFirebaseConfig.employees).withConverter<Employee>(
+        fromFirestore: (snapshot, _) => Employee.fromJson(snapshot.data()!),
         toFirestore: (user, _) => user.toJson(),
       );
 
   void signIn(String login, String password) async {
     emit(Loading());
     try {
-      User? user = await usersRef.doc(login).get().then((value) => value.data());
+      Employee? user = await usersRef.doc(login).get().then((value) => value.data());
       if (user != null && user.login == login && user.password == _hashingPassword(password)) {
         emit(SignIn(user: user));
         return;

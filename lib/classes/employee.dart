@@ -1,24 +1,24 @@
 import 'data_type.dart';
 
-class User extends DataType {
+class Employee extends DataType {
   final String login;
   final String password;
   final String name;
-  final Role role;
+  final String role;
 
-  User({
+  Employee({
     required this.login,
     required this.password,
     required this.name,
     required this.role,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory Employee.fromJson(Map<String, dynamic> json) {
+    return Employee(
       login: json['login'],
       password: json['password'],
       name: json['name'],
-      role: Role.values[json['role']],
+      role: json['role'],
     );
   }
 
@@ -28,7 +28,7 @@ class User extends DataType {
       'login': login,
       'password': password,
       'name': name,
-      'role': Role.values.indexOf(role),
+      'role': role,
     };
   }
 
@@ -39,12 +39,5 @@ class User extends DataType {
   String get id => login;
 
   @override
-
   List get valuesForTable => [login, name, role];
-}
-
-enum Role {
-  admin,
-  developer,
-  employee,
 }

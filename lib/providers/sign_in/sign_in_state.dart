@@ -1,4 +1,4 @@
-import 'package:admin_website/classes/user.dart';
+import 'package:admin_website/classes/employee.dart';
 
 class SignInState {}
 
@@ -7,7 +7,7 @@ class SignOut extends SignInState{}
 class Loading extends SignInState {}
 
 class SignIn extends SignInState {
-  final User user;
+  final Employee user;
 
   SignIn({required this.user});
 }
