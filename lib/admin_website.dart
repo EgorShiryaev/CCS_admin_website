@@ -15,7 +15,7 @@ class AdminWebsite extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SignInCubit>(create: (context) => SignInCubit()),
-        BlocProvider<EmployeesCRUDCubit>(create: (context) => EmployeesCRUDCubit()),
+        BlocProvider<EmployeesCubit>(create: (context) => EmployeesCubit()),
       ],
       child: MaterialApp(
         title: 'Admin website',
@@ -30,7 +30,7 @@ class AdminWebsite extends StatelessWidget {
               Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute(builder: (_) => ConsolePage(user: arguments['user']));
             case '/users':
-              return MaterialPageRoute(builder: (_) => const EmployeePage());
+              return MaterialPageRoute(builder: (_) => EmployeePage());
             default:
               return null;
           }

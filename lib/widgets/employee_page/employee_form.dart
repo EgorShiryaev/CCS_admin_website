@@ -1,4 +1,3 @@
-import 'package:admin_website/classes/app_state.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeForm extends StatelessWidget {
@@ -12,6 +11,7 @@ class EmployeeForm extends StatelessWidget {
   final Function setRole;
   final GlobalKey<FormState> formGlobalKey;
   final bool isSelectedUserIsNotNull;
+  final List<String> roles;
 
   const EmployeeForm({
     Key? key,
@@ -25,6 +25,7 @@ class EmployeeForm extends StatelessWidget {
     required this.setRole,
     required this.formGlobalKey,
     required this.isSelectedUserIsNotNull,
+    required this.roles,
   }) : super(key: key);
 
   @override
@@ -80,7 +81,7 @@ class EmployeeForm extends StatelessWidget {
                   color: LocalStyles.focusColor,
                 ),
                 onChanged: (value) => setRole(value),
-                items: appState.employeeRoles.map<DropdownMenuItem<String>>((String role) {
+                items: roles.map<DropdownMenuItem<String>>((String role) {
                   return DropdownMenuItem<String>(
                     value: role,
                     child: SizedBox(

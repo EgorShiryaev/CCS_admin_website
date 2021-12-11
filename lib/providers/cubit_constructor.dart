@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../classes/data_type.dart';
 
-class CRUD_CubitConstructor<Type> extends Cubit<StateCubit> {
+class CubitConstructor<Type> extends Cubit<StateCubit> {
   final CollectionReference collectionRef;
 
-  CRUD_CubitConstructor({
+  CubitConstructor({
     required this.collectionRef,
   }) : super(Empty());
 

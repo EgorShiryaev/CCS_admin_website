@@ -1,5 +1,4 @@
 import 'package:admin_website/_config/firebase_config.dart';
-import 'package:admin_website/classes/app_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -25,126 +24,6 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _employeeRolesStreemBuilder();
-  }
-
-  _employeeRolesStreemBuilder() {
-    final Stream<QuerySnapshot<Data>> _employeeRolesStreem = FirebaseFirestore.instance
-        .collection(DefaultFirebaseConfig.employeesRoles)
-        .withConverter(
-          fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, DefaultFirebaseConfig.employeesRoles),
-          toFirestore: (data, _) => {},
-        )
-        .snapshots();
-
-    return StreamBuilder<QuerySnapshot<Data>>(
-      stream: _employeeRolesStreem,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return _errorStateBuilder(snapshot.error.toString());
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return _loadingStateBuilder();
-        }
-
-        List dataDynamic = snapshot.data?.docs.first.get(DefaultFirebaseConfig.employeesRoles);
-        List<String> data = dataDynamic.map((e) => e.toString()).toList();
-        appState.employeeRoles = data;
-        return _filmGenresStreemBuilder();
-      },
-    );
-  }
-
-  _filmGenresStreemBuilder() {
-    final Stream<QuerySnapshot<Data>> _filmGenresStreem = FirebaseFirestore.instance
-        .collection(DefaultFirebaseConfig.filmGenres)
-        .withConverter(
-          fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, DefaultFirebaseConfig.filmGenres),
-          toFirestore: (data, _) => {},
-        )
-        .snapshots();
-
-    return StreamBuilder<QuerySnapshot<Data>>(
-      stream: _filmGenresStreem,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return _errorStateBuilder(snapshot.error.toString());
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return _loadingStateBuilder();
-        }
-
-        List dataDynamic = snapshot.data?.docs.first.get(DefaultFirebaseConfig.filmGenres);
-        List<String> data = dataDynamic.map((e) => e.toString()).toList();
-        appState.filmGenres = data;
-        return _filmsStreemBuilder();
-      },
-    );
-  }
-
-  _filmsStreemBuilder() {
-    final Stream<QuerySnapshot<Film>> _filmsStreem = FirebaseFirestore.instance
-        .collection(DefaultFirebaseConfig.films)
-        .withConverter(
-          fromFirestore: (snap, _) => Film.fromJson(snap.data()!),
-          toFirestore: (f, _) => {},
-        )
-        .snapshots();
-
-    return StreamBuilder<QuerySnapshot<Film>>(
-      stream: _filmsStreem,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Film>> snapshot) {
-        if (snapshot.hasError) {
-          return _errorStateBuilder(snapshot.error.toString());
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return _loadingStateBuilder();
-        }
-
-        List<Film> dataDynamic = snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
-        List<String> data = dataDynamic.map((e) => e.title.toString()).toList();
-        appState.films = data;
-        return _loadedStateBuilder();
-      },
-    );
-  }
-
-  // _cinemaHallsStreemBuilder() {
-  //   final Stream<QuerySnapshot<Film>> _cinemaHallsStreem = FirebaseFirestore.instance
-  //       .collection(DefaultFirebaseConfig.films)
-  //       .withConverter(
-  //         fromFirestore: (snap, _) => Film.fromJson(snap.data()!),
-  //         toFirestore: (f, _) => {},
-  //       )
-  //       .snapshots();
-
-  //   return StreamBuilder<QuerySnapshot<Film>>(
-  //     stream: _cinemaHallsStreem,
-  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  //       if (snapshot.hasError) {
-  //         return _errorStateBuilder(snapshot.error.toString());
-  //       }
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return _loadingStateBuilder();
-  //       }
-
-  //       List dataDynamic = snapshot.data?.docs.map((e) => e.get('title')).toList() ?? [];
-  //       List<String> data = dataDynamic.map((e) => e.toString()).toList();
-  //       appState.films = data;
-  //       return _filmGenresStreemBuilder();
-  //     },
-  //   );
-  // }
-
-  _errorStateBuilder(String error) {
-    return Center(child: Text('Error $error'));
-  }
-
-  _loadingStateBuilder() {
-    return const Center(child: CircularProgressIndicator(color: Colors.grey));
-  }
-
-  _loadedStateBuilder() {
     return Center(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -173,6 +52,89 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
               .toList()),
     );
   }
+
+  // _filmGenresStreemBuilder() {
+  //   final Stream<QuerySnapshot<Data>> _filmGenresStreem = FirebaseFirestore.instance
+  //       .collection(DefaultFirebaseConfig.filmGenres)
+  //       .withConverter(
+  //         fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, DefaultFirebaseConfig.filmGenres),
+  //         toFirestore: (data, _) => {},
+  //       )
+  //       .snapshots();
+
+  //   return StreamBuilder<QuerySnapshot<Data>>(
+  //     stream: _filmGenresStreem,
+  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  //       if (snapshot.hasError) {
+  //         return _errorStateBuilder(snapshot.error.toString());
+  //       }
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return _loadingStateBuilder();
+  //       }
+
+  //       List dataDynamic = snapshot.data?.docs.first.get(DefaultFirebaseConfig.filmGenres);
+  //       List<String> data = dataDynamic.map((e) => e.toString()).toList();
+  //       appState.filmGenres = data;
+  //       return _filmsStreemBuilder();
+  //     },
+  //   );
+  // }
+
+  // _filmsStreemBuilder() {
+  //   final Stream<QuerySnapshot<Film>> _filmsStreem = FirebaseFirestore.instance
+  //       .collection(DefaultFirebaseConfig.films)
+  //       .withConverter(
+  //         fromFirestore: (snap, _) => Film.fromJson(snap.data()!),
+  //         toFirestore: (f, _) => {},
+  //       )
+  //       .snapshots();
+
+  //   return StreamBuilder<QuerySnapshot<Film>>(
+  //     stream: _filmsStreem,
+  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Film>> snapshot) {
+  //       if (snapshot.hasError) {
+  //         return _errorStateBuilder(snapshot.error.toString());
+  //       }
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return _loadingStateBuilder();
+  //       }
+
+  //       List<Film> dataDynamic = snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
+  //       List<String> data = dataDynamic.map((e) => e.title.toString()).toList();
+  //       appState.films = data;
+  //       return _loadedStateBuilder();
+  //     },
+  //   );
+  // }
+
+  // _cinemaHallsStreemBuilder() {
+  //   final Stream<QuerySnapshot<Film>> _cinemaHallsStreem = FirebaseFirestore.instance
+  //       .collection(DefaultFirebaseConfig.films)
+  //       .withConverter(
+  //         fromFirestore: (snap, _) => Film.fromJson(snap.data()!),
+  //         toFirestore: (f, _) => {},
+  //       )
+  //       .snapshots();
+
+  //   return StreamBuilder<QuerySnapshot<Film>>(
+  //     stream: _cinemaHallsStreem,
+  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  //       if (snapshot.hasError) {
+  //         return _errorStateBuilder(snapshot.error.toString());
+  //       }
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return _loadingStateBuilder();
+  //       }
+
+  //       List dataDynamic = snapshot.data?.docs.map((e) => e.get('title')).toList() ?? [];
+  //       List<String> data = dataDynamic.map((e) => e.toString()).toList();
+  //       appState.films = data;
+  //       return _filmGenresStreemBuilder();
+  //     },
+  //   );
+  // }
+
+  _loadedStateBuilder() {}
 }
 
 class LocalStyles {
