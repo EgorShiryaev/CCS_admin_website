@@ -34,7 +34,7 @@ class PopupSignPage extends StatelessWidget {
                         padding: const EdgeInsets.all(25),
                         decoration: LocalStyles.messageDecoration(state is Error ? 'error' : 'success'),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               state is Error
@@ -45,14 +45,13 @@ class PopupSignPage extends StatelessWidget {
                               style: LocalStyles.message,
                               textAlign: TextAlign.center,
                             ),
-                            const SizedBox(height: 10),
                             OutlinedButton(
                               style: LocalStyles.buttonStyle,
                               onPressed: () {
                                 if (state is SignIn) {
                                   Navigator.pushNamed(
                                     context,
-                                    '/console',
+                                    '/mainMenu',
                                     arguments: {'user': state.user},
                                   );
                                   loginController.clear();

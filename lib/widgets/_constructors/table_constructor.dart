@@ -47,14 +47,7 @@ class TableConstructor extends StatelessWidget {
   getDataCell(DataType data) {
     List<dynamic> tableData = data.valuesForTable;
     return tableData.map((value) {
-      String cellData = value.toString();
-      if (cellData.contains('.') && cellData.split('.').length == 2) {
-        Enum enumValue = value;
-        cellData = enumValue.name;
-      }
-      return DataCell(
-        Text(cellData),
-      );
+      return DataCell(Text(value));
     }).toList();
   }
 }

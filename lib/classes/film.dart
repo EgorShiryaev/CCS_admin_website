@@ -4,51 +4,35 @@ class Film extends DataType {
   final String title;
   final String description;
   final int duration;
-  final int genre;
+  final String genre;
   final String posterUrl;
-  final String company;
-  final String country;
-  final int year;
 
   Film({
     required this.title,
     required this.description,
+    required this.posterUrl,
     required this.duration,
     required this.genre,
-    required this.posterUrl,
-    required this.company,
-    required this.country,
-    required this.year,
   });
 
   factory Film.fromJson(Map<String, dynamic> json) {
     return Film(
-      title: json['about']['title'],
-      description: json['about']['description'],
-      duration: json['about']['duration'],
-      genre: json['about']['genre'],
+      description: json['description'],
+      duration: json['duration'],
+      genre: json['genre'],
       posterUrl: json['poster_url'],
-      company: json['production']['company'],
-      country: json['production']['country'],
-      year: json['production']['year'],
+      title: json['title'],
     );
   }
 
   @override
   Map<String, dynamic> toJson() {
     return {
-      'about': {
-        'title': title,
-        'description': description,
-        'duration': duration,
-        'genre': genre,
-      },
+      'title': title,
+      'description': description,
+      'duration': duration,
+      'genre': genre,
       'poster_url': posterUrl,
-      'production': {
-        'company': company,
-        'country': country,
-        'year': year,
-      },
     };
   }
 
@@ -56,8 +40,14 @@ class Film extends DataType {
   String get id => title;
 
   @override
-  List<String> get keysForTable => ['Title', 'Description', 'Duration', 'Genre', 'Company', 'Country', 'Year'];
+  List<String> get keysForTable => [
+        'Название',
+        'Описание',
+        'Продолжительность',
+        'Жанр',
+        'Постер',
+      ];
 
   @override
-  List get valuesForTable => [title, description, duration, genre, company, country, year];
+  List<String> get valuesForTable => [title, description, duration.toString(), genre, posterUrl];
 }

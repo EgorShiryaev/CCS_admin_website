@@ -1,9 +1,5 @@
-import 'package:admin_website/_config/firebase_config.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../classes/employee.dart';
-import '../../classes/film.dart';
 
 class BodyMainMenuPage extends StatefulWidget {
   final Employee user;
@@ -15,8 +11,8 @@ class BodyMainMenuPage extends StatefulWidget {
 
 class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
   final buttons = [
-    Button(title: 'Сотрудники', url: '/users'),
-    Button(title: 'Фильмы', url: '/'),
+    Button(title: 'Сотрудники', url: '/employees'),
+    Button(title: 'Фильмы', url: '/films'),
     Button(title: 'Сеансы', url: '/'),
     Button(title: 'Создать отчёт', url: '/'),
     Button(title: 'Выйти', url: 'back'),
@@ -52,33 +48,6 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
               .toList()),
     );
   }
-
-  // _filmGenresStreemBuilder() {
-  //   final Stream<QuerySnapshot<Data>> _filmGenresStreem = FirebaseFirestore.instance
-  //       .collection(DefaultFirebaseConfig.filmGenres)
-  //       .withConverter(
-  //         fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, DefaultFirebaseConfig.filmGenres),
-  //         toFirestore: (data, _) => {},
-  //       )
-  //       .snapshots();
-
-  //   return StreamBuilder<QuerySnapshot<Data>>(
-  //     stream: _filmGenresStreem,
-  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  //       if (snapshot.hasError) {
-  //         return _errorStateBuilder(snapshot.error.toString());
-  //       }
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return _loadingStateBuilder();
-  //       }
-
-  //       List dataDynamic = snapshot.data?.docs.first.get(DefaultFirebaseConfig.filmGenres);
-  //       List<String> data = dataDynamic.map((e) => e.toString()).toList();
-  //       appState.filmGenres = data;
-  //       return _filmsStreemBuilder();
-  //     },
-  //   );
-  // }
 
   // _filmsStreemBuilder() {
   //   final Stream<QuerySnapshot<Film>> _filmsStreem = FirebaseFirestore.instance
@@ -134,7 +103,6 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
   //   );
   // }
 
-  _loadedStateBuilder() {}
 }
 
 class LocalStyles {

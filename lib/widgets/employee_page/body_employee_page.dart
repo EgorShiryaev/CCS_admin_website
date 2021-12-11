@@ -5,7 +5,7 @@ import 'package:admin_website/widgets/_constructors/table_constructor.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../providers/employee_crud_cubit.dart';
+import '../../providers/employees_cubit.dart';
 import 'employee_form.dart';
 
 class BodyEmployeePage extends StatefulWidget {
@@ -28,8 +28,9 @@ class BodyEmployeePage extends StatefulWidget {
 }
 
 class _BodyEmployeePageState extends State<BodyEmployeePage> {
+  
   Employee? selectUser;
-  setSelectedUser(Employee? e) {
+  setSelectUser(Employee? e) {
     setState(() => selectUser = e);
     widget.loginController.text = selectUser != null ? selectUser!.login : '';
     widget.passController.text = '';
@@ -58,12 +59,12 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
       passValidator: passwordValidator,
       nameValidator: emptyValidator,
       formGlobalKey: widget.globalKey,
-      isSelectedUserIsNotNull: selectUser != null,
+      isSelectedEmployeeIsNotNull: selectUser != null,
       roles: widget.roles,
     );
     Widget table = TableConstructor(
       datas: widget.employees,
-      setSelectedData: setSelectedUser,
+      setSelectedData: setSelectUser,
       selectData: selectUser,
     );
     return BodyConstructor(
@@ -136,18 +137,4 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
   }
 
   String hashingPassword(String password) => sha256.convert(utf8.encode(password)).toString();
-}
-
-class LocalStyles {
-  static const header2 = TextStyle(fontSize: 32, color: inputColor);
-  static const inputColor = Colors.grey;
-  static final buttonStyle = OutlinedButton.styleFrom(
-    side: const BorderSide(width: 1, color: inputColor),
-    padding: const EdgeInsets.all(10),
-    primary: inputColor,
-  );
-  static const buttonTextStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.w600,
-  );
 }

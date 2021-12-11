@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
 
-class EmployeeForm extends StatelessWidget {
+class FilmForm extends StatelessWidget {
   final GlobalKey<FormState> formGlobalKey;
-  final TextEditingController loginController;
-  final TextEditingController passController;
-  final TextEditingController nameController;
-  final Function loginValidator;
-  final Function passValidator;
-  final Function nameValidator;
-  final String role;
-  final Function setRole;
-  final bool isSelectedEmployeeIsNotNull;
-  final List<String> roles;
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
+  final TextEditingController durationController;
+  final Function titleValidator;
+  final Function descriptionValidator;
+  final Function durationValidator;
+  final String genre;
+  final Function setGenre;
+  final String posterPath;
+  final Function setPosterPath;
+  final bool isSelectedFilmIsNotNull;
+  final List<String> genres;
 
-  const EmployeeForm({
+  const FilmForm({
     Key? key,
-    required this.loginController,
-    required this.passController,
-    required this.nameController,
-    required this.loginValidator,
-    required this.passValidator,
-    required this.nameValidator,
-    required this.role,
-    required this.setRole,
     required this.formGlobalKey,
-    required this.isSelectedEmployeeIsNotNull,
-    required this.roles,
+    required this.titleController,
+    required this.descriptionController,
+    required this.durationController,
+    required this.titleValidator,
+    required this.descriptionValidator,
+    required this.durationValidator,
+    required this.genre,
+    required this.setGenre,
+    required this.posterPath,
+    required this.setPosterPath,
+    required this.isSelectedFilmIsNotNull,
+    required this.genres,
   }) : super(key: key);
 
   @override
@@ -38,41 +42,41 @@ class EmployeeForm extends StatelessWidget {
             width: 300,
             margin: const EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
-              readOnly: isSelectedEmployeeIsNotNull,
-              controller: loginController,
-              style:
-                  isSelectedEmployeeIsNotNull ? LocalStyles.activeTextFieldStyle : LocalStyles.inactiveTextFieldStyle,
+              readOnly: isSelectedFilmIsNotNull,
+              controller: titleController,
+              style: isSelectedFilmIsNotNull ? LocalStyles.activeTextFieldStyle : LocalStyles.inactiveTextFieldStyle,
               cursorColor: LocalStyles.inputColor,
-              decoration: LocalStyles.buildInputDecoration('Логин'),
-              validator: (value) => loginValidator(value),
+              decoration: LocalStyles.buildInputDecoration('Название'),
+              validator: (value) => titleValidator(value),
             ),
           ),
           Container(
             width: 300,
             margin: const EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
-              controller: passController,
+              maxLines: 5,
+              controller: descriptionController,
               style: LocalStyles.inactiveTextFieldStyle,
               cursorColor: LocalStyles.inputColor,
-              decoration: LocalStyles.buildInputDecoration('Пароль'),
-              validator: (value) => passValidator(value),
+              decoration: LocalStyles.buildInputDecoration('Описание'),
+              validator: (value) => descriptionValidator(value),
             ),
           ),
           Container(
             width: 300,
             margin: const EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
-              controller: nameController,
+              controller: durationController,
               style: LocalStyles.inactiveTextFieldStyle,
               cursorColor: LocalStyles.inputColor,
-              decoration: LocalStyles.buildInputDecoration('ФИО'),
-              validator: (value) => nameValidator(value),
+              decoration: LocalStyles.buildInputDecoration('Продолжительность(в минутах)'),
+              validator: (value) => durationValidator(value),
             ),
           ),
           SizedBox(
             width: 300,
             child: DropdownButton<String>(
-              value: role,
+              value: genre,
               borderRadius: const BorderRadius.all(Radius.circular(5)),
               alignment: AlignmentDirectional.center,
               icon: const Icon(Icons.arrow_downward_sharp),
@@ -80,8 +84,8 @@ class EmployeeForm extends StatelessWidget {
                 height: 1,
                 color: LocalStyles.focusColor,
               ),
-              onChanged: (value) => setRole(value),
-              items: roles.map<DropdownMenuItem<String>>((String role) {
+              onChanged: (value) => setGenre(value),
+              items: genres.map<DropdownMenuItem<String>>((String role) {
                 return DropdownMenuItem<String>(
                   value: role,
                   child: SizedBox(

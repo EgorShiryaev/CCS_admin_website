@@ -1,7 +1,8 @@
 abstract class DataType {
+
   List<String> get keysForTable;
 
-  List<dynamic> get valuesForTable;
+  List<String> get valuesForTable;
 
   String get id;
 

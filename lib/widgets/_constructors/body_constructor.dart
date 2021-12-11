@@ -53,7 +53,10 @@ class BodyConstructor extends StatelessWidget {
           flex: 4,
           child: Row(
             children: [
-              Expanded(flex: 2, child: form),
+              Expanded(
+                flex: 2,
+                child: SingleChildScrollView(child: form),
+              ),
               Expanded(
                 flex: 4,
                 child: Column(

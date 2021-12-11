@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../_config/firebase_config.dart';
 import '../classes/employee.dart';
 import '../providers/cubit_constructor.dart';
-import '../providers/employee_crud_cubit.dart';
+import '../providers/employees_cubit.dart';
 import '../widgets/employee_page/body_employee_page.dart';
 import '../widgets/main_menu_page/body_main_menu_page.dart';
 import '../widgets/state_builder.dart';
@@ -20,8 +20,10 @@ class EmployeePage extends StatelessWidget {
       )
       .doc(DefaultFirebaseConfig.employeesRoles)
       .snapshots();
+
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<EmployeesCubit>(context).read();
     return Scaffold(
       body: StreamBuilder<DocumentSnapshot<Data>>(
         stream: _employeeRolesStreem,
