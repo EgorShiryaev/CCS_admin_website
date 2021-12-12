@@ -16,12 +16,20 @@ class TableConstructor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: LocalStyles.containerDecoration,
+    return SingleChildScrollView(
+
       child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: DataTable(
           border: LocalStyles.tableBorder,
-          columns: datas.first.keysForTable.map((String header) => DataColumn(label: Text(header))).toList(),
+          columns: datas.first.keysForTable
+              .map((String header) => DataColumn(
+                    label: Container(
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: Text(header, style: LocalStyles.coloredTextStyle),
+                    ),
+                  ))
+              .toList(),
           rows: getRows(datas),
         ),
       ),
@@ -45,23 +53,30 @@ class TableConstructor extends StatelessWidget {
   }
 
   getDataCell(DataType data) {
-    List<dynamic> tableData = data.valuesForTable;
+    List<String> tableData = data.valuesForTable;
     return tableData.map((value) {
-      return DataCell(Text(value));
+      return DataCell(
+        Container(
+          constraints: const BoxConstraints(
+            maxWidth: 300,
+          ),
+          child: Text(value, style: LocalStyles.coloredTextStyle),
+        ),
+      );
     }).toList();
   }
 }
 
 class LocalStyles {
-  static final color = Colors.grey.shade700;
-  static final tableBorder = TableBorder(
+  static const color = Colors.grey;
+  static const tableBorder = TableBorder(
     top: BorderSide(color: LocalStyles.color),
     bottom: BorderSide(color: LocalStyles.color),
     left: BorderSide(color: LocalStyles.color),
     right: BorderSide(color: LocalStyles.color),
     horizontalInside: BorderSide(color: LocalStyles.color),
   );
-  static final containerDecoration = BoxDecoration(
+  static const containerDecoration = BoxDecoration(
     border: Border(
       top: BorderSide(color: LocalStyles.color),
       bottom: BorderSide(color: LocalStyles.color),
@@ -69,4 +84,5 @@ class LocalStyles {
       right: BorderSide(color: LocalStyles.color),
     ),
   );
+  static const coloredTextStyle = TextStyle(color: color);
 }

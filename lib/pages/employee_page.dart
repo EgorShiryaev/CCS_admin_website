@@ -9,8 +9,8 @@ import '../widgets/employee_page/body_employee_page.dart';
 import '../widgets/main_menu_page/body_main_menu_page.dart';
 import '../widgets/state_builder.dart';
 
-class EmployeePage extends StatelessWidget {
-  EmployeePage({Key? key}) : super(key: key);
+class EmployeesPage extends StatelessWidget {
+  EmployeesPage({Key? key}) : super(key: key);
 
   final Stream<DocumentSnapshot<Data>> _employeeRolesStreem = FirebaseFirestore.instance
       .collection(DefaultFirebaseConfig.employeesRoles)
@@ -24,35 +24,41 @@ class EmployeePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<EmployeesCubit>(context).read();
-    return Scaffold(
-      body: StreamBuilder<DocumentSnapshot<Data>>(
-        stream: _employeeRolesStreem,
-        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Data>> snapshot) {
-          if (snapshot.hasError) {
-            return StateBuilder.error(snapshot.error.toString());
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return StateBuilder.loading();
-          }
-          List dataDynamic = snapshot.data!.get(DefaultFirebaseConfig.employeesRoles);
-          List<String> roles = dataDynamic.map((e) => e.toString()).toList();
-          return BlocBuilder<EmployeesCubit, StateCubit>(
-            builder: (context, state) {
-              if (state is Loading) {
-                return StateBuilder.loading();
-              }
-              if (state is Error) {
-                return StateBuilder.error(state.message);
-              }
-              if (state is Loaded) {
-                List<Employee> data = state.data as List<Employee>;
-                return BodyEmployeePage(employees: data, roles: roles);
-              }
-              return StateBuilder.error('Неизвестный state');
-            },
-          );
-        },
-      ),
+    return Scaffold(body: _streamBuilder());
+  }
+
+  _streamBuilder() {
+    return StreamBuilder<DocumentSnapshot<Data>>(
+      stream: _employeeRolesStreem,
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Data>> snapshot) {
+        if (snapshot.hasError) {
+          return StateBuilder.error(snapshot.error.toString());
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return StateBuilder.loading();
+        }
+        List dataDynamic = snapshot.data!.get(DefaultFirebaseConfig.employeesRoles);
+        List<String> roles = dataDynamic.map((e) => e.toString()).toList();
+        return _blocBuilder(roles);
+      },
+    );
+  }
+
+  _blocBuilder(List<String> roles) {
+    return BlocBuilder<EmployeesCubit, StateCubit>(
+      builder: (context, state) {
+        if (state is Loading) {
+          return StateBuilder.loading();
+        }
+        if (state is Error) {
+          return StateBuilder.error(state.message);
+        }
+        if (state is Loaded) {
+          List<Employee> data = state.data as List<Employee>;
+          return BodyEmployeePage(employees: data, roles: roles);
+        }
+        return StateBuilder.error('Неизвестный state');
+      },
     );
   }
 }

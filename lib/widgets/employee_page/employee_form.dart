@@ -86,8 +86,9 @@ class EmployeeForm extends StatelessWidget {
                   value: role,
                   child: SizedBox(
                     width: 276,
-                    child: Center(
-                      child: Text(role),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(role, style:LocalStyles.headerTextStyle),
                     ),
                   ),
                 );
@@ -101,7 +102,7 @@ class EmployeeForm extends StatelessWidget {
 }
 
 class LocalStyles {
-  static const inputColor = Colors.white;
+  static const inputColor = Colors.grey;
   static const focusColor = Colors.grey;
   static const headerTextStyle = TextStyle(fontSize: 16, color: inputColor);
   static const inactiveTextFieldStyle = TextStyle(color: inputColor);

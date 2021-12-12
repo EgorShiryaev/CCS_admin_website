@@ -24,8 +24,11 @@ class FilmsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<FilmsCubit>(context).read();
-    return Scaffold(
-      body: StreamBuilder<DocumentSnapshot<Data>>(
+    return Scaffold(body: _streamBuilder());
+  }
+
+  _streamBuilder() {
+    return StreamBuilder<DocumentSnapshot<Data>>(
         stream: _filmGenresStreem,
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Data>> snapshot) {
           if (snapshot.hasError) {
@@ -36,26 +39,29 @@ class FilmsPage extends StatelessWidget {
           }
           List dataDynamic = snapshot.data!.get(DefaultFirebaseConfig.filmGenres);
           List<String> genres = dataDynamic.map((e) => e.toString()).toList();
-          return BlocBuilder<FilmsCubit, StateCubit>(
-            builder: (context, state) {
-              if (state is Loading) {
-                return StateBuilder.loading();
-              }
-              if (state is Error) {
-                return StateBuilder.error(state.message);
-              }
-              if (state is Loaded) {
-                List<Film> films = state.data as List<Film>;
-                return BodyFilmsPage(
-                  films: films,
-                  genres: genres,
-                );
-              }
-              return StateBuilder.error('Неизвестный state');
-            },
+          return _blocBuilder(genres);
+        });
+  }
+
+  _blocBuilder(List<String> genres) {
+    return BlocBuilder<FilmsCubit, StateCubit>(
+      builder: (context, state) {
+        if (state is Loading) {
+          return StateBuilder.loading();
+        }
+        if (state is Error) {
+          return StateBuilder.error(state.message);
+        }
+        if (state is Loaded) {
+          List<Film> films = state.data as List<Film>;
+          genres.sort((a, b) => a.compareTo(b));
+          return BodyFilmsPage(
+            films: films,
+            genres: genres,
           );
-        },
-      ),
+        }
+        return StateBuilder.error('Неизвестный state');
+      },
     );
   }
 }

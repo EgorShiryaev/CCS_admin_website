@@ -86,14 +86,14 @@ class PopupSignPage extends StatelessWidget {
 class LocalStyles {
   static const color = Colors.white;
   static const message = TextStyle(fontSize: 20, color: color);
-  static final messagePopUpContainerColor = Colors.grey.shade800;
+  static const messagePopUpContainerColor = Colors.grey;
   static const errorColor = Colors.red;
   static const successColor = Colors.green;
   static messageDecoration(String state) => BoxDecoration(
         color: state == 'error' ? errorColor : successColor,
         borderRadius: const BorderRadius.all(Radius.circular(25)),
       );
-  static const buttonColor = Colors.white;
+  static const buttonColor = Colors.grey;
   static final buttonStyle = OutlinedButton.styleFrom(
     side: const BorderSide(width: 1, color: color),
     padding: const EdgeInsets.all(10),

@@ -28,7 +28,6 @@ class BodyEmployeePage extends StatefulWidget {
 }
 
 class _BodyEmployeePageState extends State<BodyEmployeePage> {
-  
   Employee? selectUser;
   setSelectUser(Employee? e) {
     setState(() => selectUser = e);
@@ -55,9 +54,9 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
       nameController: widget.nameController,
       role: selectRole,
       setRole: setSelectRol,
-      loginValidator: loginValidator,
-      passValidator: passwordValidator,
-      nameValidator: emptyValidator,
+      loginValidator: _loginValidator,
+      passValidator: _passwordValidator,
+      nameValidator: _emptyValidator,
       formGlobalKey: widget.globalKey,
       isSelectedEmployeeIsNotNull: selectUser != null,
       roles: widget.roles,
@@ -70,23 +69,23 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
     return BodyConstructor(
       form: form,
       table: table,
-      add: _createUser,
-      update: _updateUser,
-      delete: _deleteUser,
+      add: _create,
+      update: _update,
+      delete: _delete,
       isSelect: selectUser != null,
     );
   }
 
-  loginValidator(String value) {
+  _loginValidator(String value) {
     for (var user in widget.employees) {
       if (user.login == value) {
         return 'Этот логин занят';
       }
     }
-    return emptyValidator(value);
+    return _emptyValidator(value);
   }
 
-  passwordValidator(String value) {
+  _passwordValidator(String value) {
     if (selectUser == null || value.isNotEmpty) {
       if (value.length < 8) {
         return 'Пароль должен быть 8 или больше символов';
@@ -98,42 +97,40 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
     }
   }
 
-  emptyValidator(String value) {
+  _emptyValidator(String value) {
     return value.isEmpty ? 'Введите данные' : null;
   }
 
-  _createUser() {
+  _create() {
     if (widget.globalKey.currentState!.validate()) {
-      Employee user = Employee(
-        login: widget.loginController.text,
-        password: widget.passController.text,
-        name: widget.nameController.text,
-        role: selectRole,
-      );
-      BlocProvider.of<EmployeesCubit>(context).create(user);
-      setState(() => selectUser = null);
+      final employee = _createEmployee();
+      BlocProvider.of<EmployeesCubit>(context).create(employee);
+      setSelectUser(null);
     }
   }
 
-  _updateUser() {
-    if (passwordValidator(widget.passController.text) == null) {
-      Employee user = Employee(
-        login: widget.loginController.text,
-        password:
-            widget.passController.text.isEmpty ? selectUser!.password : hashingPassword(widget.passController.text),
-        name: widget.nameController.text,
-        role: selectRole,
-      );
+  _update() {
+    if (_passwordValidator(widget.passController.text) == null) {
+      final user = _createEmployee();
       BlocProvider.of<EmployeesCubit>(context).update(user);
-      setState(() => selectUser = null);
+      setSelectUser(null);
     } else {
       widget.globalKey.currentState!.validate();
     }
   }
 
-  _deleteUser() {
+  _delete() {
     BlocProvider.of<EmployeesCubit>(context).delete(selectUser!.id);
-    setState(() => selectUser = null);
+    setSelectUser(null);
+  }
+
+  _createEmployee() {
+    return Employee(
+      login: widget.loginController.text,
+      password: widget.passController.text.isEmpty ? selectUser!.password : hashingPassword(widget.passController.text),
+      name: widget.nameController.text,
+      role: selectRole,
+    );
   }
 
   String hashingPassword(String password) => sha256.convert(utf8.encode(password)).toString();

@@ -15,18 +15,37 @@ class ButtonBarCUDConstuctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Function> functions = [add, update, delete];
-    List<String> header = ['Добавить', 'Изменить', 'Удалить'];
+    List<Function> functions = [add, update, delete, () => Navigator.pop(context)];
+    List<String> header = ['Добавить', 'Изменить', 'Удалить', 'Выйти'];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List<Widget>.generate(
         functions.length,
         (index) => Expanded(
           child: OutlinedButton(
-            style: LocalStyles.buttonStyle(index == 0 ? !isSelect : isSelect),
-            onPressed: (index == 0 ? !isSelect : isSelect) ? () => functions[index]() : null,
+            style: LocalStyles.buttonStyle(index == 0
+                ? !isSelect
+                : index == 3
+                    ? true
+                    : isSelect),
+            onPressed: (index == 0
+                    ? !isSelect
+                    : index == 3
+                        ? true
+                        : isSelect)
+                ? () => functions[index]()
+                : null,
             child: Center(
-              child: Text(header[index], style: LocalStyles.header2((index == 0 ? !isSelect : isSelect))),
+              child: Text(
+                header[index],
+                style: LocalStyles.header2(
+                  (index == 0
+                      ? !isSelect
+                      : index == 3
+                          ? true
+                          : isSelect),
+                ),
+              ),
             ),
           ),
         ),

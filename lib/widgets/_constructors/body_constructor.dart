@@ -22,75 +22,44 @@ class BodyConstructor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
+        Container(
+          padding: const EdgeInsets.all(25),
+          width: 350,
+          child: SingleChildScrollView(child: form),
+        ),
         Expanded(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Expanded(flex: 2, child: SizedBox()),
-              const Expanded(flex: 4, child: SizedBox()),
-              Expanded(
-                child: Container(
-                  height: 50,
-                  margin: const EdgeInsets.all(20),
-                  child: OutlinedButton(
-                    style: LocalStyles.buttonStyle(true),
-                    onPressed: () => Navigator.pop(context),
-                    child: Center(
-                      child: Text(
-                        'Выйти',
-                        style: LocalStyles.header2(true),
+          child: Container(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: table,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 4,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: SingleChildScrollView(child: form),
-              ),
-              Expanded(
-                flex: 4,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 9,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: table,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: ButtonBarCUDConstuctor(
-                        add: add,
-                        delete: delete,
-                        update: update,
-                        isSelect: isSelect,
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  height: 50,
+                  child: ButtonBarCUDConstuctor(
+                    add: add,
+                    delete: delete,
+                    update: update,
+                    isSelect: isSelect,
+                  ),
                 ),
-              ),
-              const Expanded(child: SizedBox())
-            ],
+              ],
+            ),
           ),
         ),
-        const Expanded(child: SizedBox()),
       ],
     );
   }

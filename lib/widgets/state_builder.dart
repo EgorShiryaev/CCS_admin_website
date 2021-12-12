@@ -16,5 +16,5 @@ class StateBuilder {
   );
   static const errorColor = Colors.red;
   static const messageTextStyle = TextStyle(fontSize: 20, color: messageTextColor);
-  static const messageTextColor = Colors.white;
+  static const messageTextColor = Colors.grey;
 }

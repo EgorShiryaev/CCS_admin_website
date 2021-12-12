@@ -1,27 +1,45 @@
 import 'package:admin_website/classes/data_type.dart';
 
 class Film extends DataType {
-  final String title;
+  final String actors;
+  final int ageLimit;
+  final int budget;
+  final String country;
   final String description;
   final int duration;
+  final String filmmaker;
   final String genre;
-  final String posterUrl;
+  final double rating;
+  final String title;
+  final int year;
 
   Film({
+    required this.actors,
+    required this.ageLimit,
+    required this.budget,
+    required this.country,
+    required this.filmmaker,
+    required this.rating,
+    required this.year,
     required this.title,
     required this.description,
-    required this.posterUrl,
     required this.duration,
     required this.genre,
   });
 
   factory Film.fromJson(Map<String, dynamic> json) {
     return Film(
+      actors: json['actors'],
+      ageLimit: json['age_limit'],
+      budget: json['budget'],
+      country: json['country'],
+      filmmaker: json['filmmaker'],
+      rating: json['rating'],
+      year: json['year'],
+      title: json['title'],
       description: json['description'],
       duration: json['duration'],
       genre: json['genre'],
-      posterUrl: json['poster_url'],
-      title: json['title'],
     );
   }
 
@@ -30,9 +48,15 @@ class Film extends DataType {
     return {
       'title': title,
       'description': description,
-      'duration': duration,
+      'rating': rating,
+      'year': year,
+      'country': country,
       'genre': genre,
-      'poster_url': posterUrl,
+      'duration': duration,
+      'age_limit': ageLimit,
+      'budget': budget,
+      'actors': actors,
+      'filmmaker': filmmaker,
     };
   }
 
@@ -43,11 +67,29 @@ class Film extends DataType {
   List<String> get keysForTable => [
         'Название',
         'Описание',
-        'Продолжительность',
+        'Рейтинг',
+        'Год',
+        'Страна',
         'Жанр',
-        'Постер',
+        'Время (мин.)',
+        'Бюджет',
+        'Ограничение.',
+        'Режиссер',
+        'Актеры',
       ];
 
   @override
-  List<String> get valuesForTable => [title, description, duration.toString(), genre, posterUrl];
+  List<String> get valuesForTable => [
+        title,
+        description,
+        '$rating',
+        '$year',
+        country,
+        genre,
+        '$duration мин.',
+        '\$${budget / 1000000} млн.',
+        '$ageLimit+',
+        filmmaker,
+        actors,
+      ];
 }
