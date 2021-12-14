@@ -38,6 +38,7 @@ dependencies:
   flutter_bloc: ^7.0.0
   crypto: ^3.0.1
   firebase_storage: ^10.2.3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

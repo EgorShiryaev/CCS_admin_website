@@ -1,6 +1,5 @@
 abstract class DataType {
-
-  List<String> get keysForTable;
+  List<String> get headersForTable;
 
   List<String> get valuesForTable;
 

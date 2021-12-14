@@ -37,4 +37,5 @@ class DefaultFirebaseConfig {
   static get cinemaHalls => 'cinemaHalls';
   static get employees => 'employees';
   static get films => 'films';
+  static get sessions => 'sessions';
 }

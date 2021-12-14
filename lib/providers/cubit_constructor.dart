@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../classes/data_type.dart';
 
-class CubitConstructor<Type> extends Cubit<StateCubit> {
+class CubitConstructor<Type> extends Cubit<CubitState> {
   final CollectionReference collectionRef;
 
   CubitConstructor({
@@ -50,19 +50,19 @@ class CubitConstructor<Type> extends Cubit<StateCubit> {
   }
 }
 
-class StateCubit {}
+class CubitState {}
 
-class Empty extends StateCubit {}
+class Empty extends CubitState {}
 
-class Loading extends StateCubit {}
+class Loading extends CubitState {}
 
-class Loaded<Type> extends StateCubit {
+class Loaded<Type> extends CubitState {
   final List<Type> data;
 
   Loaded({required this.data});
 }
 
-class Error extends StateCubit {
+class Error extends CubitState {
   final String message;
 
   Error({required this.message});

@@ -23,30 +23,30 @@ class BodyConstructor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(25),
-          width: 350,
-          child: SingleChildScrollView(child: form),
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              width: 350,
+              child: form,
+            ),
+          ),
         ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
             child: Column(
               children: [
                 Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: table,
-                        ),
-                      ),
-                    ],
+                  child: Container(
+                    decoration: LocalStyles.tableContainerDecoration,
+                    child: table,
                   ),
                 ),
+                const SizedBox(height: 25),
                 SizedBox(
                   height: 50,
                   child: ButtonBarCUDConstuctor(
@@ -63,4 +63,11 @@ class BodyConstructor extends StatelessWidget {
       ],
     );
   }
+}
+
+class LocalStyles {
+  static final tableContainerDecoration = BoxDecoration(
+    border: Border.all(color: Colors.grey, width: 2),
+    borderRadius: BorderRadius.circular(5),
+  );
 }

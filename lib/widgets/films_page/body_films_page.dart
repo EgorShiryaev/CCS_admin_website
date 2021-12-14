@@ -34,28 +34,30 @@ class BodyFilmsPage extends StatefulWidget {
 }
 
 class _BodyFilmsPageState extends State<BodyFilmsPage> {
-  Film? selectFilm;
-  setSelectFilm(Film? e) {
-    setState(() => selectFilm = e);
-    widget.titleController.text = selectFilm != null ? selectFilm!.title : '';
-    widget.descriptionController.text = selectFilm != null ? selectFilm!.description : '';
-    widget.durationController.text = selectFilm != null ? '${selectFilm!.duration}' : '';
-    widget.actorsController.text = selectFilm != null ? selectFilm!.actors : '';
-    widget.ageLimitController.text = selectFilm != null ? '${selectFilm!.ageLimit}' : '';
-    widget.budgetController.text = selectFilm != null ? '${selectFilm!.budget}' : '';
-    widget.countryController.text = selectFilm != null ? selectFilm!.country : '';
-    widget.filmmakerController.text = selectFilm != null ? selectFilm!.filmmaker : '';
-    widget.ratingController.text = selectFilm != null ? '${selectFilm!.rating}' : '';
-    widget.yearController.text = selectFilm != null ? '${selectFilm!.year}' : '';
-    selectGenre = selectFilm != null ? selectFilm!.genre : widget.genres.last;
+
+  Film? selectedFilm;
+  setSelectedFilm(Film? e) {
+    setState(() => selectedFilm = e);
+
+    widget.titleController.text = selectedFilm != null ? selectedFilm!.title : '';
+    widget.descriptionController.text = selectedFilm != null ? selectedFilm!.description : '';
+    widget.durationController.text = selectedFilm != null ? '${selectedFilm!.duration}' : '';
+    widget.actorsController.text = selectedFilm != null ? selectedFilm!.actors : '';
+    widget.ageLimitController.text = selectedFilm != null ? '${selectedFilm!.ageLimit}' : '';
+    widget.budgetController.text = selectedFilm != null ? '${selectedFilm!.budget}' : '';
+    widget.countryController.text = selectedFilm != null ? selectedFilm!.country : '';
+    widget.filmmakerController.text = selectedFilm != null ? selectedFilm!.filmmaker : '';
+    widget.ratingController.text = selectedFilm != null ? '${selectedFilm!.rating}' : '';
+    widget.yearController.text = selectedFilm != null ? '${selectedFilm!.year}' : '';
+    selectedGenre = selectedFilm != null ? selectedFilm!.genre : widget.genres.last;
   }
 
-  String selectGenre = '';
-  setSelectGenre(String genre) => setState(() => selectGenre = genre);
+  late String selectedGenre;
+  setSelectedGenre(String genre) => setState(() => selectedGenre = genre);
 
   @override
   void initState() {
-    selectGenre = widget.genres.last;
+    selectedGenre = widget.genres.last;
     super.initState();
   }
 
@@ -83,16 +85,16 @@ class _BodyFilmsPageState extends State<BodyFilmsPage> {
       filmmakerValidator: _emptyValidator,
       ratingValidator: _ratingValidator,
       yearValidator: _intValidator,
-      genre: selectGenre,
-      setGenre: setSelectGenre,
-      isSelectedFilmIsNotNull: selectFilm != null,
+      genre: selectedGenre,
+      setGenre: setSelectedGenre,
+      isSelectedFilmIsNotNull: selectedFilm != null,
       genres: widget.genres,
     );
 
     final table = TableConstructor(
-      datas: widget.films,
-      setSelectedData: setSelectFilm,
-      selectData: selectFilm,
+      data: widget.films,
+      setSelectedData: setSelectedFilm,
+      selectData: selectedFilm,
     );
     return BodyConstructor(
       form: form,
@@ -100,7 +102,7 @@ class _BodyFilmsPageState extends State<BodyFilmsPage> {
       add: _create,
       update: _update,
       delete: _delete,
-      isSelect: selectFilm != null,
+      isSelect: selectedFilm != null,
     );
   }
 
@@ -143,7 +145,7 @@ class _BodyFilmsPageState extends State<BodyFilmsPage> {
     if (widget.globalKey.currentState!.validate()) {
       final film = _createFilm();
       BlocProvider.of<FilmsCubit>(context).create(film);
-      setSelectFilm(null);
+      setSelectedFilm(null);
     }
   }
 
@@ -152,15 +154,15 @@ class _BodyFilmsPageState extends State<BodyFilmsPage> {
         _intValidator(widget.durationController.text) == null) {
       final film = _createFilm();
       BlocProvider.of<FilmsCubit>(context).update(film);
-      setSelectFilm(null);
+      setSelectedFilm(null);
     } else {
       widget.globalKey.currentState!.validate();
     }
   }
 
   _delete() {
-    BlocProvider.of<FilmsCubit>(context).delete(selectFilm!.id);
-    setSelectFilm(null);
+    BlocProvider.of<FilmsCubit>(context).delete(selectedFilm!.id);
+    setSelectedFilm(null);
   }
 
   _createFilm() {
@@ -168,7 +170,7 @@ class _BodyFilmsPageState extends State<BodyFilmsPage> {
       title: widget.titleController.text,
       description: widget.descriptionController.text,
       duration: int.parse(widget.durationController.text),
-      genre: selectGenre,
+      genre: selectedGenre,
       actors: widget.actorsController.text,
       ageLimit: int.parse(widget.ageLimitController.text),
       budget: int.parse(widget.budgetController.text),

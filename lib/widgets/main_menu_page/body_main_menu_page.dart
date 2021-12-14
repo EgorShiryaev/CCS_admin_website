@@ -48,61 +48,6 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
               .toList()),
     );
   }
-
-  // _filmsStreemBuilder() {
-  //   final Stream<QuerySnapshot<Film>> _filmsStreem = FirebaseFirestore.instance
-  //       .collection(DefaultFirebaseConfig.films)
-  //       .withConverter(
-  //         fromFirestore: (snap, _) => Film.fromJson(snap.data()!),
-  //         toFirestore: (f, _) => {},
-  //       )
-  //       .snapshots();
-
-  //   return StreamBuilder<QuerySnapshot<Film>>(
-  //     stream: _filmsStreem,
-  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Film>> snapshot) {
-  //       if (snapshot.hasError) {
-  //         return _errorStateBuilder(snapshot.error.toString());
-  //       }
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return _loadingStateBuilder();
-  //       }
-
-  //       List<Film> dataDynamic = snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
-  //       List<String> data = dataDynamic.map((e) => e.title.toString()).toList();
-  //       appState.films = data;
-  //       return _loadedStateBuilder();
-  //     },
-  //   );
-  // }
-
-  // _cinemaHallsStreemBuilder() {
-  //   final Stream<QuerySnapshot<Film>> _cinemaHallsStreem = FirebaseFirestore.instance
-  //       .collection(DefaultFirebaseConfig.films)
-  //       .withConverter(
-  //         fromFirestore: (snap, _) => Film.fromJson(snap.data()!),
-  //         toFirestore: (f, _) => {},
-  //       )
-  //       .snapshots();
-
-  //   return StreamBuilder<QuerySnapshot<Film>>(
-  //     stream: _cinemaHallsStreem,
-  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  //       if (snapshot.hasError) {
-  //         return _errorStateBuilder(snapshot.error.toString());
-  //       }
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return _loadingStateBuilder();
-  //       }
-
-  //       List dataDynamic = snapshot.data?.docs.map((e) => e.get('title')).toList() ?? [];
-  //       List<String> data = dataDynamic.map((e) => e.toString()).toList();
-  //       appState.films = data;
-  //       return _filmGenresStreemBuilder();
-  //     },
-  //   );
-  // }
-
 }
 
 class LocalStyles {

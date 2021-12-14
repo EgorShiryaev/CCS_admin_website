@@ -64,16 +64,16 @@ class Film extends DataType {
   String get id => title;
 
   @override
-  List<String> get keysForTable => [
+  List<String> get headersForTable => [
         'Название',
         'Описание',
         'Рейтинг',
         'Год',
         'Страна',
         'Жанр',
-        'Время (мин.)',
+        'Время',
         'Бюджет',
-        'Ограничение.',
+        'Огран.',
         'Режиссер',
         'Актеры',
       ];

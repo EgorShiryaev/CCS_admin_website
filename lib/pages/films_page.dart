@@ -44,7 +44,7 @@ class FilmsPage extends StatelessWidget {
   }
 
   _blocBuilder(List<String> genres) {
-    return BlocBuilder<FilmsCubit, StateCubit>(
+    return BlocBuilder<FilmsCubit, CubitState>(
       builder: (context, state) {
         if (state is Loading) {
           return StateBuilder.loading();
@@ -53,8 +53,8 @@ class FilmsPage extends StatelessWidget {
           return StateBuilder.error(state.message);
         }
         if (state is Loaded) {
-          List<Film> films = state.data as List<Film>;
           genres.sort((a, b) => a.compareTo(b));
+          List<Film> films = state.data as List<Film>;
           return BodyFilmsPage(
             films: films,
             genres: genres,

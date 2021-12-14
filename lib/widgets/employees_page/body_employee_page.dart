@@ -28,21 +28,21 @@ class BodyEmployeePage extends StatefulWidget {
 }
 
 class _BodyEmployeePageState extends State<BodyEmployeePage> {
-  Employee? selectUser;
-  setSelectUser(Employee? e) {
-    setState(() => selectUser = e);
-    widget.loginController.text = selectUser != null ? selectUser!.login : '';
+  Employee? selectedUser;
+  setSelectedUser(Employee? e) {
+    setState(() => selectedUser = e);
+    widget.loginController.text = selectedUser != null ? selectedUser!.login : '';
     widget.passController.text = '';
-    widget.nameController.text = selectUser != null ? selectUser!.name : '';
-    selectRole = selectUser != null ? selectUser!.role : widget.roles.last;
+    widget.nameController.text = selectedUser != null ? selectedUser!.name : '';
+    selectedRole = selectedUser != null ? selectedUser!.role : widget.roles.last;
   }
 
-  String selectRole = '';
-  setSelectRol(String role) => setState(() => selectRole = role);
+  String selectedRole = '';
+  setSelectedRole(String role) => setState(() => selectedRole = role);
 
   @override
   void initState() {
-    selectRole = widget.roles.last;
+    selectedRole = widget.roles.last;
     super.initState();
   }
 
@@ -52,27 +52,29 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
       loginController: widget.loginController,
       passController: widget.passController,
       nameController: widget.nameController,
-      role: selectRole,
-      setRole: setSelectRol,
+      role: selectedRole,
+      setRole: setSelectedRole,
       loginValidator: _loginValidator,
       passValidator: _passwordValidator,
       nameValidator: _emptyValidator,
       formGlobalKey: widget.globalKey,
-      isSelectedEmployeeIsNotNull: selectUser != null,
+      isSelectedEmployeeIsNotNull: selectedUser != null,
       roles: widget.roles,
     );
+
     Widget table = TableConstructor(
-      datas: widget.employees,
-      setSelectedData: setSelectUser,
-      selectData: selectUser,
+      data: widget.employees,
+      setSelectedData: setSelectedUser,
+      selectData: selectedUser,
     );
+    
     return BodyConstructor(
       form: form,
       table: table,
       add: _create,
       update: _update,
       delete: _delete,
-      isSelect: selectUser != null,
+      isSelect: selectedUser != null,
     );
   }
 
@@ -86,7 +88,7 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
   }
 
   _passwordValidator(String value) {
-    if (selectUser == null || value.isNotEmpty) {
+    if (selectedUser == null || value.isNotEmpty) {
       if (value.length < 8) {
         return 'Пароль должен быть 8 или больше символов';
       }
@@ -105,7 +107,7 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
     if (widget.globalKey.currentState!.validate()) {
       final employee = _createEmployee();
       BlocProvider.of<EmployeesCubit>(context).create(employee);
-      setSelectUser(null);
+      setSelectedUser(null);
     }
   }
 
@@ -113,23 +115,23 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
     if (_passwordValidator(widget.passController.text) == null) {
       final user = _createEmployee();
       BlocProvider.of<EmployeesCubit>(context).update(user);
-      setSelectUser(null);
+      setSelectedUser(null);
     } else {
       widget.globalKey.currentState!.validate();
     }
   }
 
   _delete() {
-    BlocProvider.of<EmployeesCubit>(context).delete(selectUser!.id);
-    setSelectUser(null);
+    BlocProvider.of<EmployeesCubit>(context).delete(selectedUser!.id);
+    setSelectedUser(null);
   }
 
   _createEmployee() {
     return Employee(
       login: widget.loginController.text,
-      password: widget.passController.text.isEmpty ? selectUser!.password : hashingPassword(widget.passController.text),
+      password: widget.passController.text.isEmpty ? selectedUser!.password : hashingPassword(widget.passController.text),
       name: widget.nameController.text,
-      role: selectRole,
+      role: selectedRole,
     );
   }
 

@@ -5,14 +5,14 @@ import '../_config/firebase_config.dart';
 import '../classes/employee.dart';
 import '../providers/cubit_constructor.dart';
 import '../providers/employees_cubit.dart';
-import '../widgets/employee_page/body_employee_page.dart';
+import '../widgets/employees_page/body_employee_page.dart';
 import '../widgets/main_menu_page/body_main_menu_page.dart';
 import '../widgets/state_builder.dart';
 
 class EmployeesPage extends StatelessWidget {
   EmployeesPage({Key? key}) : super(key: key);
 
-  final Stream<DocumentSnapshot<Data>> _employeeRolesStreem = FirebaseFirestore.instance
+  final Stream<DocumentSnapshot<Data>> _employeeRolesStream = FirebaseFirestore.instance
       .collection(DefaultFirebaseConfig.employeesRoles)
       .withConverter(
         fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, DefaultFirebaseConfig.employeesRoles),
@@ -29,7 +29,7 @@ class EmployeesPage extends StatelessWidget {
 
   _streamBuilder() {
     return StreamBuilder<DocumentSnapshot<Data>>(
-      stream: _employeeRolesStreem,
+      stream: _employeeRolesStream,
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Data>> snapshot) {
         if (snapshot.hasError) {
           return StateBuilder.error(snapshot.error.toString());
@@ -45,7 +45,7 @@ class EmployeesPage extends StatelessWidget {
   }
 
   _blocBuilder(List<String> roles) {
-    return BlocBuilder<EmployeesCubit, StateCubit>(
+    return BlocBuilder<EmployeesCubit, CubitState>(
       builder: (context, state) {
         if (state is Loading) {
           return StateBuilder.loading();

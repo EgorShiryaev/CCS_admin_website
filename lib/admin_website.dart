@@ -1,8 +1,10 @@
 import 'package:admin_website/pages/films_page.dart';
 import 'package:admin_website/pages/main_menu_page.dart';
+import 'package:admin_website/pages/sessions_page.dart';
 import 'package:admin_website/pages/sign_in_page.dart';
-import 'package:admin_website/pages/employee_page.dart';
+import 'package:admin_website/pages/employees_page.dart';
 import 'package:admin_website/providers/films_cubit.dart';
+import 'package:admin_website/providers/sessions_cubit.dart';
 import 'package:admin_website/providers/sign_in/sign_in_cubit.dart';
 import 'package:admin_website/providers/employees_cubit.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +20,14 @@ class AdminWebsite extends StatelessWidget {
       providers: [
         BlocProvider<SignInCubit>(create: (context) => SignInCubit()),
         BlocProvider<EmployeesCubit>(create: (context) => EmployeesCubit()),
-        BlocProvider<FilmsCubit>(create: (context) => FilmsCubit())
+        BlocProvider<FilmsCubit>(create: (context) => FilmsCubit()),
+        BlocProvider<SessionsCubit>(create: (context) => SessionsCubit()),
       ],
       child: MaterialApp(
         title: 'Admin website',
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
-        initialRoute: '/films',
+        initialRoute: '/sessions',
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/signIn':
@@ -37,6 +40,8 @@ class AdminWebsite extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => EmployeesPage());
             case '/films':
               return MaterialPageRoute(builder: (_) => FilmsPage());
+            case '/sessions':
+              return MaterialPageRoute(builder: (_) => SessionsPage());
             default:
               return null;
           }

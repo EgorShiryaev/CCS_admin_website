@@ -1,43 +1,53 @@
 import 'package:flutter/material.dart';
-
 import '../../classes/data_type.dart';
 
 class TableConstructor extends StatelessWidget {
-  final List<DataType> datas;
+  final List<DataType> data;
   final Function setSelectedData;
   final DataType? selectData;
 
-  const TableConstructor({
+  TableConstructor({
     Key? key,
-    required this.datas,
+    required this.data,
     required this.setSelectedData,
     required this.selectData,
   }) : super(key: key);
 
+  final scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return verticalTable();
+  }
 
+  verticalTable() {
+    return SingleChildScrollView(
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
           border: LocalStyles.tableBorder,
-          columns: datas.first.keysForTable
-              .map((String header) => DataColumn(
-                    label: Container(
-                      constraints: const BoxConstraints(maxWidth: 300),
-                      child: Text(header, style: LocalStyles.coloredTextStyle),
-                    ),
-                  ))
-              .toList(),
-          rows: getRows(datas),
+          columns: getColumns(data.first.headersForTable),
+          rows: getRows(data),
         ),
       ),
     );
   }
 
-  getRows(List<DataType> datas) {
-    return datas
+  getColumns(List<String> headers) {
+    return headers
+        .map(
+          (String header) => DataColumn(
+            label: Container(
+              constraints: const BoxConstraints(maxWidth: 300),
+              child: Text(header, style: LocalStyles.coloredTextStyle),
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  getRows(List<DataType> data) {
+    return data
         .map((e) => DataRow(
               selected: selectData != null ? e.id == selectData?.id : false,
               onSelectChanged: (value) {
@@ -68,21 +78,12 @@ class TableConstructor extends StatelessWidget {
 }
 
 class LocalStyles {
+  static final borderTableColor = Colors.grey.shade700;
   static const color = Colors.grey;
-  static const tableBorder = TableBorder(
-    top: BorderSide(color: LocalStyles.color),
-    bottom: BorderSide(color: LocalStyles.color),
-    left: BorderSide(color: LocalStyles.color),
-    right: BorderSide(color: LocalStyles.color),
-    horizontalInside: BorderSide(color: LocalStyles.color),
+  static final tableBorder = TableBorder.all(color: borderTableColor);
+  static final containerDecoration = BoxDecoration(
+    border: Border.all(color: color),
   );
-  static const containerDecoration = BoxDecoration(
-    border: Border(
-      top: BorderSide(color: LocalStyles.color),
-      bottom: BorderSide(color: LocalStyles.color),
-      left: BorderSide(color: LocalStyles.color),
-      right: BorderSide(color: LocalStyles.color),
-    ),
-  );
-  static const coloredTextStyle = TextStyle(color: color);
+  static final colorText = Colors.grey.shade300;
+  static final coloredTextStyle = TextStyle(color: colorText);
 }

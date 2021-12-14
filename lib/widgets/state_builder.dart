@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class StateBuilder {
   static loading() => const Center(child: CircularProgressIndicator(color: progressIndicatorColor));
-  static const progressIndicatorColor = Colors.blue;
+  static const progressIndicatorColor = Colors.grey;
   static error(String error) => Center(
         child: Container(
           padding: const EdgeInsets.all(15),
@@ -16,5 +16,5 @@ class StateBuilder {
   );
   static const errorColor = Colors.red;
   static const messageTextStyle = TextStyle(fontSize: 20, color: messageTextColor);
-  static const messageTextColor = Colors.grey;
+  static const messageTextColor = Colors.white;
 }

@@ -33,7 +33,7 @@ class Employee extends DataType {
   }
 
   @override
-  List<String> get keysForTable => ['Логин', 'ФИО', 'Должность'];
+  List<String> get headersForTable => ['Логин', 'ФИО', 'Должность'];
 
   @override
   String get id => login;
