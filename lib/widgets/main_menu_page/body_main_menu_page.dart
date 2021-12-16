@@ -13,8 +13,8 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
   final buttons = [
     Button(title: 'Сотрудники', url: '/employees'),
     Button(title: 'Фильмы', url: '/films'),
-    Button(title: 'Сеансы', url: '/'),
-    Button(title: 'Создать отчёт', url: '/'),
+    Button(title: 'Сеансы', url: '/sessions'),
+    Button(title: 'Создать отчёт', url: '/reports'),
     Button(title: 'Выйти', url: 'back'),
   ];
 
@@ -24,27 +24,29 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: buttons
-              .map((e) => Container(
-                    width: 450,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: OutlinedButton(
-                      style: LocalStyles.buttonStyle,
-                      child: Padding(
-                        padding: const EdgeInsets.all(25),
-                        child: Text(
-                          e.title,
-                          style: LocalStyles.buttonTextStyle,
-                        ),
+              .map(
+                (e) => Container(
+                  width: 450,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: OutlinedButton(
+                    style: LocalStyles.buttonStyle,
+                    child: Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: Text(
+                        e.title,
+                        style: LocalStyles.buttonTextStyle,
                       ),
-                      onPressed: () {
-                        if (e.url == 'back') {
-                          Navigator.pop(context);
-                        } else {
-                          Navigator.pushNamed(context, e.url);
-                        }
-                      },
                     ),
-                  ))
+                    onPressed: () {
+                      if (e.url == 'back') {
+                        Navigator.pop(context);
+                      } else {
+                        Navigator.pushNamed(context, e.url);
+                      }
+                    },
+                  ),
+                ),
+              )
               .toList()),
     );
   }

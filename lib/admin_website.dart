@@ -1,5 +1,6 @@
 import 'package:admin_website/pages/films_page.dart';
 import 'package:admin_website/pages/main_menu_page.dart';
+import 'package:admin_website/pages/reports_page.dart';
 import 'package:admin_website/pages/sessions_page.dart';
 import 'package:admin_website/pages/sign_in_page.dart';
 import 'package:admin_website/pages/employees_page.dart';
@@ -27,7 +28,7 @@ class AdminWebsite extends StatelessWidget {
         title: 'Admin website',
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
-        initialRoute: '/sessions',
+        initialRoute: '/reports',
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/signIn':
@@ -42,6 +43,8 @@ class AdminWebsite extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => FilmsPage());
             case '/sessions':
               return MaterialPageRoute(builder: (_) => SessionsPage());
+            case '/reports':
+              return MaterialPageRoute(builder: (_) => const ReportsPage());
             default:
               return null;
           }
