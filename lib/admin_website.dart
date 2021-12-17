@@ -28,7 +28,7 @@ class AdminWebsite extends StatelessWidget {
         title: 'Admin website',
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
-        initialRoute: '/reports',
+        initialRoute: '/signIn',
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/signIn':

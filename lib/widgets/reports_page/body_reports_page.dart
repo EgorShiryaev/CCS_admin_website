@@ -204,22 +204,23 @@ class Report {
       return session.ticketPrice * (cinemaHallMap[session.cinemaHall]! - session.freeSeats);
     }
 
-    const weekInHour = 14 * 24;
+    const weekInHour = 7 * 24;
     const monthInDay = 31;
 
     final currentMonth = now.month;
-    final lastMonth = currentMonth == 12 ? 1 : currentMonth - 1;
+    final lastMonth = currentMonth == 1 ? 12 : currentMonth - 1;
 
     final currentQuarter = (now.month - 1) ~/ 3 + 1;
     final lastQuarter = currentQuarter == 1 ? 4 : currentQuarter - 1;
 
     for (var sess in sessions) {
       final differenceInHour = now.difference(sess.date).inHours;
+
       if (differenceInHour < weekInHour * 2) {
         if (differenceInHour < weekInHour) {
           profitWeek.current += profitPerSession(sess);
         } else {
-          profitWeek.current += profitPerSession(sess);
+          profitWeek.last += profitPerSession(sess);
         }
       }
 
@@ -229,7 +230,7 @@ class Report {
         if (sessMonth == currentMonth) {
           profitMonth.current += profitPerSession(sess);
         } else if (sessMonth == lastMonth) {
-          profitMonth.current += profitPerSession(sess);
+          profitMonth.last += profitPerSession(sess);
         }
       }
 
@@ -238,39 +239,27 @@ class Report {
         if (sessQuarter == currentQuarter) {
           profitQuarter.current += profitPerSession(sess);
         } else if (sessQuarter == lastQuarter) {
-          profitQuarter.current += profitPerSession(sess);
+          profitQuarter.last += profitPerSession(sess);
         }
       }
 
       if (sess.date.year == now.year) {
         profitYear.current += profitPerSession(sess);
       } else if (sess.date.year == now.year - 1) {
-        profitYear.current += profitPerSession(sess);
+        profitYear.last += profitPerSession(sess);
       }
     }
 
-    List<String> currentLastRU = [
-      'Текущ',
-      'Прошл',
+    List<String> content = [
+      'Текущая неделя',
+      'Прошлая неделя',
+      'Текущый месяц $currentMonth.${now.year}г',
+      'Прошлый месяц $lastMonth.${lastMonth + 1 == currentMonth ? now.year : now.year - 1}г',
+      'Текущый квартал $currentQuarter ${now.year}г',
+      'Прошлый квартал $lastQuarter ${lastQuarter + 1 == currentQuarter ? now.year : now.year - 1}г',
+      'Текущый год ${now.year}г',
+      'Прошлый год ${now.year - 1}г',
     ];
-
-    List<String> periods = [
-      'неделя',
-      'месяц',
-      'квартал',
-      'год',
-    ];
-
-    List<String> content = [];
-
-    periods.forEach((per) {
-      currentLastRU.forEach((curLast) {
-        String line = curLast;
-        line += per == 'неделя' ? 'ая' : 'ый';
-        line += ' $per';
-        content.add(line);
-      });
-    });
 
     const header = 'Отчет по выручке';
 

@@ -126,7 +126,8 @@ class SessionForm extends StatelessWidget {
     showDatePicker(
       context: context,
       initialDate: date,
-      firstDate: now,
+      // firstDate: now,
+      firstDate: DateTime(now.year - 1, now.month, now.day),
       lastDate: DateTime(now.year, now.month + 1, now.day),
     ).then((date) => setDate(date));
   }
