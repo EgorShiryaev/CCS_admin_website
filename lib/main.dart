@@ -5,6 +5,6 @@ import 'admin_website.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseConfig.platformOptions);
+  await Firebase.initializeApp(options: FirebaseConfig.platformOptions);
   runApp(const AdminWebsite());
 }

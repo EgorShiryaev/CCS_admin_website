@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignInCubit extends Cubit<SignInState> {
   SignInCubit() : super(SignOut());
 
-  final usersRef = FirebaseFirestore.instance.collection(DefaultFirebaseConfig.employees).withConverter<Employee>(
+  final usersRef = FirebaseFirestore.instance.collection(FirebaseConfig.employees).withConverter<Employee>(
         fromFirestore: (snapshot, _) => Employee.fromJson(snapshot.data()!),
         toFirestore: (user, _) => user.toJson(),
       );

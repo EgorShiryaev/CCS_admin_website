@@ -15,7 +15,7 @@ class SessionsPage extends StatelessWidget {
   SessionsPage({Key? key}) : super(key: key);
 
   final Stream<QuerySnapshot<CinemaHall>> _cinemaHallsStream = FirebaseFirestore.instance
-      .collection(DefaultFirebaseConfig.cinemaHalls)
+      .collection(FirebaseConfig.cinemaHalls)
       .withConverter<CinemaHall>(
         fromFirestore: (snap, _) => CinemaHall.fromJson(snap.data()!),
         toFirestore: (cinemahalls, _) => cinemahalls.toJson(),
@@ -23,7 +23,7 @@ class SessionsPage extends StatelessWidget {
       .snapshots();
 
   final Stream<QuerySnapshot<Film>> _filmStream = FirebaseFirestore.instance
-      .collection(DefaultFirebaseConfig.films)
+      .collection(FirebaseConfig.films)
       .withConverter<Film>(
           fromFirestore: (snap, _) => Film.fromJson(snap.data()!), toFirestore: (film, _) => film.toJson())
       .snapshots();

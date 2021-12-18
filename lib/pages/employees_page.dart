@@ -13,12 +13,12 @@ class EmployeesPage extends StatelessWidget {
   EmployeesPage({Key? key}) : super(key: key);
 
   final Stream<DocumentSnapshot<Data>> _employeeRolesStream = FirebaseFirestore.instance
-      .collection(DefaultFirebaseConfig.employeesRoles)
+      .collection(FirebaseConfig.employeesRoles)
       .withConverter(
-        fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, DefaultFirebaseConfig.employeesRoles),
+        fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, FirebaseConfig.employeesRoles),
         toFirestore: (data, _) => {},
       )
-      .doc(DefaultFirebaseConfig.employeesRoles)
+      .doc(FirebaseConfig.employeesRoles)
       .snapshots();
 
   @override
@@ -37,7 +37,7 @@ class EmployeesPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return StateBuilder.loading();
         }
-        List dataDynamic = snapshot.data!.get(DefaultFirebaseConfig.employeesRoles);
+        List dataDynamic = snapshot.data!.get(FirebaseConfig.employeesRoles);
         List<String> roles = dataDynamic.map((e) => e.toString()).toList();
         return _blocBuilder(roles);
       },

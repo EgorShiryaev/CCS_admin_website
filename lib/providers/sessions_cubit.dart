@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class SessionsCubit extends CubitConstructor<Session> {
   SessionsCubit()
       : super(
-          collectionRef: FirebaseFirestore.instance.collection(DefaultFirebaseConfig.sessions).withConverter<Session>(
+          collectionRef: FirebaseFirestore.instance.collection(FirebaseConfig.sessions).withConverter<Session>(
                 fromFirestore: (snap, _) => Session.fromJson(snap.data()!),
                 toFirestore: (session, _) => session.toJson(),
               ),

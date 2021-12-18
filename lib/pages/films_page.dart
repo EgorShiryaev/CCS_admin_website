@@ -13,12 +13,12 @@ class FilmsPage extends StatelessWidget {
   FilmsPage({Key? key}) : super(key: key);
 
   final Stream<DocumentSnapshot<Data>> _filmGenresStreem = FirebaseFirestore.instance
-      .collection(DefaultFirebaseConfig.filmGenres)
+      .collection(FirebaseConfig.filmGenres)
       .withConverter(
-        fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, DefaultFirebaseConfig.filmGenres),
+        fromFirestore: (snapshot, _) => Data.fromJson(snapshot.data()!, FirebaseConfig.filmGenres),
         toFirestore: (data, _) => {},
       )
-      .doc(DefaultFirebaseConfig.filmGenres)
+      .doc(FirebaseConfig.filmGenres)
       .snapshots();
 
   @override
@@ -37,7 +37,7 @@ class FilmsPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return StateBuilder.loading();
           }
-          List dataDynamic = snapshot.data!.get(DefaultFirebaseConfig.filmGenres);
+          List dataDynamic = snapshot.data!.get(FirebaseConfig.filmGenres);
           List<String> genres = dataDynamic.map((e) => e.toString()).toList();
           return _blocBuilder(genres);
         });
