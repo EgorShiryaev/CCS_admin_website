@@ -19,8 +19,8 @@ class BodyEmployeePage extends StatefulWidget {
 
   final loginController = TextEditingController();
   final passController = TextEditingController();
+  final surnameController = TextEditingController();
   final nameController = TextEditingController();
-
   final globalKey = GlobalKey<FormState>();
 
   @override
@@ -29,10 +29,12 @@ class BodyEmployeePage extends StatefulWidget {
 
 class _BodyEmployeePageState extends State<BodyEmployeePage> {
   Employee? selectedUser;
+
   setSelectedUser(Employee? e) {
     setState(() => selectedUser = e);
     widget.loginController.text = selectedUser != null ? selectedUser!.login : '';
     widget.passController.text = '';
+    widget.surnameController.text = selectedUser != null ? selectedUser!.surname : '';
     widget.nameController.text = selectedUser != null ? selectedUser!.name : '';
     selectedRole = selectedUser != null ? selectedUser!.role : widget.roles.last;
   }
@@ -52,11 +54,13 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
       loginController: widget.loginController,
       passController: widget.passController,
       nameController: widget.nameController,
+      surnameController: widget.surnameController,
       role: selectedRole,
       setRole: setSelectedRole,
       loginValidator: _loginValidator,
       passValidator: _passwordValidator,
-      nameValidator: _emptyValidator,
+      nameValidator: _nameValidator,
+      surnameValidator: _surnameValidator,
       formGlobalKey: widget.globalKey,
       isSelectedEmployeeIsNotNull: selectedUser != null,
       roles: widget.roles,
@@ -67,7 +71,7 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
       setSelectedData: setSelectedUser,
       selectData: selectedUser,
     );
-    
+
     return BodyConstructor(
       form: form,
       table: table,
@@ -97,6 +101,20 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
       }
       return null;
     }
+  }
+
+  _nameValidator(String value) {
+    if (value.contains(' ')) {
+      return 'Имя не может содержать пробел';
+    }
+    return _emptyValidator(value);
+  }
+
+  _surnameValidator(String value) {
+    if (value.contains(' ')) {
+      return 'Фамилия не может содержать пробел';
+    }
+    return _emptyValidator(value);
   }
 
   _emptyValidator(String value) {
@@ -129,8 +147,10 @@ class _BodyEmployeePageState extends State<BodyEmployeePage> {
   _createEmployee() {
     return Employee(
       login: widget.loginController.text,
-      password: widget.passController.text.isEmpty ? selectedUser!.password : hashingPassword(widget.passController.text),
+      password:
+          widget.passController.text.isEmpty ? selectedUser!.password : hashingPassword(widget.passController.text),
       name: widget.nameController.text,
+      surname: widget.surnameController.text,
       role: selectedRole,
     );
   }

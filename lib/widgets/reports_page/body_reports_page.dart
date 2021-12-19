@@ -7,7 +7,7 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:universal_html/html.dart';
 import '../../_config/firebase_config.dart';
 import '../../classes/cinema_halls.dart';
-import '../state_builder.dart';
+import '../_constructors/state_builder.dart';
 
 class BodyReportsPage extends StatelessWidget {
   BodyReportsPage({Key? key}) : super(key: key);

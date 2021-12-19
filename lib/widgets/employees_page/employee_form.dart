@@ -5,9 +5,11 @@ class EmployeeForm extends StatelessWidget {
   final TextEditingController loginController;
   final TextEditingController passController;
   final TextEditingController nameController;
+  final TextEditingController surnameController;
   final Function loginValidator;
   final Function passValidator;
   final Function nameValidator;
+  final Function surnameValidator;
   final String role;
   final Function setRole;
   final bool isSelectedEmployeeIsNotNull;
@@ -18,9 +20,11 @@ class EmployeeForm extends StatelessWidget {
     required this.loginController,
     required this.passController,
     required this.nameController,
+    required this.surnameController,
     required this.loginValidator,
     required this.passValidator,
     required this.nameValidator,
+    required this.surnameValidator,
     required this.role,
     required this.setRole,
     required this.formGlobalKey,
@@ -64,10 +68,21 @@ class EmployeeForm extends StatelessWidget {
               width: 300,
               margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
+                controller: surnameController,
+                style: LocalStyles.inactiveTextFieldStyle,
+                cursorColor: LocalStyles.inputColor,
+                decoration: LocalStyles.buildInputDecoration('Фамилия'),
+                validator: (value) => surnameValidator(value),
+              ),
+            ),
+            Container(
+              width: 300,
+              margin: const EdgeInsets.only(bottom: 10),
+              child: TextFormField(
                 controller: nameController,
                 style: LocalStyles.inactiveTextFieldStyle,
                 cursorColor: LocalStyles.inputColor,
-                decoration: LocalStyles.buildInputDecoration('ФИО'),
+                decoration: LocalStyles.buildInputDecoration('Имя'),
                 validator: (value) => nameValidator(value),
               ),
             ),

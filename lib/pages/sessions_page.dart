@@ -9,7 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/state_builder.dart';
+import '../widgets/_constructors/state_builder.dart';
 
 class SessionsPage extends StatelessWidget {
   SessionsPage({Key? key}) : super(key: key);

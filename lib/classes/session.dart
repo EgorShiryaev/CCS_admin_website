@@ -49,7 +49,7 @@ class Session extends DataType {
 
   @override
   String get id =>
-      '${date.year}-${date.month}-${date.day}T${time.toString().split('(').last.split(')').first.replaceAll(':', '-')}|$film';
+      '${date.toIso8601String().split('T').first}T${time.toString().split('(').last.split(')').first.replaceAll(':', '-')}|$film';
 
   @override
   List<String> get headersForTable => [

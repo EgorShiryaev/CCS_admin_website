@@ -7,7 +7,7 @@ import '../providers/cubit_constructor.dart';
 import '../providers/employees_cubit.dart';
 import '../widgets/employees_page/body_employee_page.dart';
 import '../widgets/main_menu_page/body_main_menu_page.dart';
-import '../widgets/state_builder.dart';
+import '../widgets/_constructors/state_builder.dart';
 
 class EmployeesPage extends StatelessWidget {
   EmployeesPage({Key? key}) : super(key: key);

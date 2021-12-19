@@ -9,7 +9,7 @@ class MainMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BodyMainMenuPage(user: user),
+      body: BodyMainMenuPage(employee: user),
     );
   }
 }

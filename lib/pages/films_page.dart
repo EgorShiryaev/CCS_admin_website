@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../_config/firebase_config.dart';
 import '../providers/cubit_constructor.dart';
 import '../widgets/main_menu_page/body_main_menu_page.dart';
-import '../widgets/state_builder.dart';
+import '../widgets/_constructors/state_builder.dart';
 
 class FilmsPage extends StatelessWidget {
   FilmsPage({Key? key}) : super(key: key);

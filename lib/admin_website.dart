@@ -34,9 +34,8 @@ class AdminWebsite extends StatelessWidget {
             case '/signIn':
               return MaterialPageRoute(builder: (_) => const SignInPage());
             case '/mainMenu':
-              // Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
-              final user = Employee(login: 'login', password: 'password', name: 'name', role: 'role');
-              return MaterialPageRoute(builder: (_) => MainMenuPage(user: user));
+              Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+              return MaterialPageRoute(builder: (_) => MainMenuPage(user: arguments['user']));
             case '/employees':
               return MaterialPageRoute(builder: (_) => EmployeesPage());
             case '/films':

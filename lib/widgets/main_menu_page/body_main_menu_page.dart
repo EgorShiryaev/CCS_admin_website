@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../classes/employee.dart';
 
-class BodyMainMenuPage extends StatefulWidget {
-  final Employee user;
-  const BodyMainMenuPage({Key? key, required this.user}) : super(key: key);
+class BodyMainMenuPage extends StatelessWidget {
+  final Employee employee;
+  BodyMainMenuPage({Key? key, required this.employee}) : super(key: key);
 
-  @override
-  State<BodyMainMenuPage> createState() => _BodyMainMenuPageState();
-}
-
-class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
-  final buttons = [
+  final cinemaManagerButtons = [
     Button(title: 'Сотрудники', url: '/employees'),
     Button(title: 'Фильмы', url: '/films'),
     Button(title: 'Сеансы', url: '/sessions'),
+    Button(title: 'Выйти', url: 'back'),
+  ];
+
+  final bookkeeperButtons = [
     Button(title: 'Создать отчёт', url: '/reports'),
     Button(title: 'Выйти', url: 'back'),
   ];
@@ -22,32 +21,37 @@ class _BodyMainMenuPageState extends State<BodyMainMenuPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: buttons
-              .map(
-                (e) => Container(
-                  width: 450,
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: OutlinedButton(
-                    style: LocalStyles.buttonStyle,
-                    child: Padding(
-                      padding: const EdgeInsets.all(25),
-                      child: Text(
-                        e.title,
-                        style: LocalStyles.buttonTextStyle,
-                      ),
-                    ),
-                    onPressed: () {
-                      if (e.url == 'back') {
-                        Navigator.pop(context);
-                      } else {
-                        Navigator.pushNamed(context, e.url);
-                      }
-                    },
-                  ),
-                ),
-              )
-              .toList()),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: employee.role == 'Управляющий кинотеатра'
+            ? cinemaManagerButtons.map((e) => _buttonConstructor(e, context)).toList()
+            : employee.role == 'Бухгалтер'
+                ? bookkeeperButtons.map((e) => _buttonConstructor(e, context)).toList()
+                : [],
+      ),
+    );
+  }
+
+  Widget _buttonConstructor(Button e, context) {
+    return Container(
+      width: 450,
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: OutlinedButton(
+        style: LocalStyles.buttonStyle,
+        child: Padding(
+          padding: const EdgeInsets.all(25),
+          child: Text(
+            e.title,
+            style: LocalStyles.buttonTextStyle,
+          ),
+        ),
+        onPressed: () {
+          if (e.url == 'back') {
+            Navigator.pop(context);
+          } else {
+            Navigator.pushNamed(context, e.url);
+          }
+        },
+      ),
     );
   }
 }
